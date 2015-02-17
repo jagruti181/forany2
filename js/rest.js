@@ -1,5 +1,5 @@
 var onlyadminurl="http://www.foranyinformation.com/admin/";
-//var onlyadminurl="http://localhost/foranyinformation/";
+//var onlyadminurl="http://localhost/forany2/admin/";
 //var onlyadminurl="http://indiavaluehomes.com/fa/";
 var adminurl=onlyadminurl+"index.php/json/";
 //var adminurl="http://localhost/foranyinformation/index.php/json/";
