@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="firstapp">
 
 <head ng-controller="headerctrl">
-    <title ng-bind="'Website Name - '+template.title">Website Name</title>
+    <title ng-bind="'For Any Information - '+template.title">For Any Information</title>
 
 
     <meta charset="utf-8">
