@@ -390,7 +390,7 @@ nav#main_menu li a,
     margin-top: 7px;
 }
 .mediumimage {
-    width: 249px !important;
+    width: 190px !important;
     border: 1px solid #000;
     margin-left: 8px;
     height: 142px !important;
@@ -2445,7 +2445,7 @@ padding: 0px 7px 0px 11px;
     color: #fff;
 }
 .media-body p {
-    width: 50%;
+    width: 100%;
     text-indent: -5px;
     padding-left: 11px;
 }
@@ -2589,8 +2589,8 @@ position: absolute;
 top: 30px;
 /* margin-left: -170px; */
 /* width: 400px; */
-z-index: -1;
-display: none;
+z-index: 99999999;
+/*display: none;*/
     
 right: -300px;
 text-align: center !important;
@@ -2608,7 +2608,6 @@ margin-top: -20px;
 margin-left: 188px;
 }
 #notificationTitle {
-z-index: 1000;
 font-weight: bold;
 padding: 14px;
 font-size: 13px;

@@ -44,6 +44,10 @@ firstapp.config(['$routeProvider',
             templateUrl: 'views/template.html',
             controller: 'signup'
         }).
+        when('/changepassword', {
+            templateUrl: 'views/template.html',
+            controller: 'changepassword'
+        }).
         when('/login', {
             templateUrl: 'views/template.html',
             controller: 'login'
@@ -75,7 +79,7 @@ firstapp.filter('imagepath', function () {
         } else {
 //            return "http://mafiawarloots.com/foranyinformation/uploads/" + input;
 //            return "http://localhost/foranyinformation/uploads/" + input;
-                        return "http://www.foranyinformation.com/admin/uploads/" + input;
+            return "http://www.foranyinformation.com/admin/uploads/" + input;
         }
     };
 });
@@ -85,11 +89,11 @@ firstapp.filter('imagepath2', function () {
         if (input == "") {
 //            return "http://mafiawarloots.com/anyinform/assets/img/default.jpg";
 //          return "http://localhost/foranyinformation/assets/img/default.jpg";
-                        return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+          return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
         } else {
 //            return "http://mafiawarloots.com/anyinform/lib/images/" + input;
 //          return "http://localhost/foranyinformation/uploads/" + input;
-                        return "http://www.foranyinformation.com/admin/uploads/" + input;
+          return "http://www.foranyinformation.com/admin/uploads/" + input;
         }
     };
 });
@@ -99,11 +103,11 @@ firstapp.filter('imagepath1', function () {
         if (input == "") {
 //            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
 //            return "http://localhost/foranyinformation/assets/img/default.jpg";
-                        return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
         } else {
 //            return "http://mafiawarloots.com/foranyinformation/lib/images/" + input;
 //            return "http://localhost/foranyinformation/lib/images/" + input;
-                        return "http://www.foranyinformation.com/admin/lib/images/" + input;
+            return "http://www.foranyinformation.com/admin/lib/images/" + input;
         }
     };
 });

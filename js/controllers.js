@@ -81,8 +81,8 @@ phonecatControllers.controller('home',
 
         //    Start Get all Banners / Adds
         var addsuccess = function (data, status) {
-//            console.log("my adds");
-//            console.log(data);
+            console.log("my adds");
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 if (data[i].position == 1) {
                     $scope.positionone = data[i].adds;
@@ -90,10 +90,15 @@ phonecatControllers.controller('home',
                     $scope.positiontwo = data[i].adds;
                 }
             }
-
-              
+            
             $scope.positiontwo[0].active = "active";
             $scope.positionone[0].active = "active";
+            
+//            for(var j = 0 ; j < $scope.positionone.length ; j++)
+//            {
+//                $scope.positionone[0]
+//            }
+            
 //            console.log("one");
 //            console.log($scope.positionone);
 //            console.log("two");
@@ -541,7 +546,7 @@ phonecatControllers.controller('detail',
 
         $scope.imagelightbox = function (img) {
             ngDialog.open({
-                template: '<img src="http://www.foranyinformation/admin/uploads/' + img + '" style="width:100%;height:auto;">',
+                template: '<img src="http://mafiawarloots.com/foranyinformation/uploads/' + img + '" style="width:100%;height:auto;">',
                 plain: true
             });
         };
@@ -646,6 +651,75 @@ phonecatControllers.controller('about',
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
     });
+
+phonecatControllers.controller('changepassword',
+    function ($scope, TemplateService, toaster, RestService, $location) {
+        $scope.template = TemplateService;
+        TemplateService.content = "views/changepassword.html";
+        TemplateService.slider = false;
+        TemplateService.navigation = "views/innerheader.html";
+    
+        $scope.login = [];
+        $scope.allvalidation = [];
+    
+//        jstorage user authentication start
+        $scope.juser = RestService.getjuser();
+        if ($scope.juser != null) {
+
+            $scope.userdata = $scope.juser.id;
+
+        } else {
+
+            $location.url("/login");
+
+        }
+//        jstorage user authentication ends
+    
+        var changepasswordsuccess = function (data, status){
+            if( data == "1" ){
+                $location.url("/home");
+            }else{
+                toaster.pop("error", "Change Password Error", "Wroung Password. ", 5000);
+            }
+        }
+        
+        $scope.changepassword = function (login) {
+            console.log(login);
+            
+            //signup validation
+            $scope.allvalidation = [{
+                field: $scope.login.oldpassword,
+                name: "Current Password",
+                validation: ""
+             }, {
+                field: $scope.login.newpassword,
+                name: "New Password",
+                validation: ""
+             }, {
+                field: $scope.login.confirmpassword,
+                name: "Confirm Password",
+                validation: ""
+             }];
+
+            var check = formvalidation($scope.allvalidation);
+
+            if ( check == '' ) {
+                if ($scope.login.newpassword === $scope.login.confirmpassword) {
+                    login.id = $scope.userdata;
+                    RestService.changepass(login).success(changepasswordsuccess);
+                } else {
+                    toaster.pop("error", "Change Password Error", "New password & Confirm password mismatch. ", 5000);
+                }
+
+            } else {
+                console.log("not ckeck");
+                toaster.pop("error", "Change Password Error", "Enter Proper " + check, 5000);
+            }
+
+        }
+    
+    });
+
 phonecatControllers.controller('profile',
     function ($scope, TemplateService, RestService) {
         $scope.template = TemplateService;
@@ -876,12 +950,26 @@ phonecatControllers.controller('OtherCtrl',
         $scope.userdata = [];
         $scope.demo = "demo";
         $scope.myemail = "";
+        $scope.profilepasword = "false";
+    
 
+        $scope.showhidediv = function (){
+            if($scope.profilepasword == "false")
+                $scope.profilepasword = "true";
+            else
+                $scope.profilepasword = "false";
+        }
+    
         $scope.gotoprofile = function () {
             $location.url('/profile');
         }
     
-    
+        $scope.gotochangepass = function () {
+            $location.url('/changepassword');
+        }
+        
+        
+        
         var callback = function () {
             $scope.juser = RestService.getjuser();
                 if ($scope.juser == null) {
@@ -1051,7 +1139,7 @@ phonecatControllers.controller('OtherCtrl',
     });
 
 phonecatControllers.controller('listbusiness',
-    function ($scope, TemplateService, RestService, $location) {
+    function ($scope, TemplateService, RestService, $location, toaster, geolocation) {
         $scope.template = TemplateService;
         TemplateService.content = "views/listbusiness.html";
         TemplateService.slider = false;
@@ -1065,6 +1153,13 @@ phonecatControllers.controller('listbusiness',
         $scope.ipath = "views/f2.php?id=event";
         $scope.ipath1 = "views/f1.php?id=event";
         //    start my angular tree view
+    
+//        geolocation.getLocation().then(function(data){
+//            console.log(data);
+//          $scope.coords = {lat:data.coords.latitude, long:data.coords.longitude};
+//        });
+    
+    
         var gettreeview = function (data, status) {
             console.log(data);
             $scope.roleList = data.children;
@@ -1152,6 +1247,11 @@ phonecatControllers.controller('listbusiness',
 
         var mapp = function (data, state) {
             console.log(data);
+            if(data.error_message)
+            {
+                console.log("in");
+                toaster.pop("error", "Listing Error", "Error :" + data.error_message, 5000);
+            }
             console.log(data.results[0].geometry.location.lat);
             console.log(data.results[0].geometry.location.lng);
             $scope.list.latitude = data.results[0].geometry.location.lat;
@@ -1253,7 +1353,7 @@ phonecatControllers.controller('listbusiness',
 
             var check = formvalidation($scope.allvalidation);
 
-            if (check) {
+            if (check=='') {
                 list.user = $scope.userdata;
                 //                list.logo = "default.jpg";
                 list.city = list.city.split(",");
