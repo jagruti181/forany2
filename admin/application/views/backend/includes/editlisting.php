@@ -116,9 +116,17 @@
 				</div>
 				
 				<div class=" form-group">
+<!--				  <span>Please use "/" to seperate two numbers</span>-->
 				  <label class="col-sm-2 control-label" for="normal-field">Contact</label>
 				  <div class="col-sm-8">
-					<input type="number" id="normal-field" class="form-control" name="contact" value="<?php echo set_value('contact',$before->contactno);?>">
+					<input type="text" id="normal-field" class="form-control" name="contact" value="<?php echo set_value('contact',$before->contactno);?>">
+				  </div>
+				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label" for="normal-field">Mobile Number</label>
+				  <div class="col-sm-8">
+					<input type="text" id="normal-field" class="form-control" name="mobile" value="<?php echo set_value('mobile',$before->mobile);?>">
 				  </div>
 				</div>
 				

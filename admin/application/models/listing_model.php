@@ -4,7 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class Listing_model extends CI_Model
 {
 	
-	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area)
+	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)
 	{
 		$data  = array(
 			'name' => $name,
@@ -32,6 +32,7 @@ class Listing_model extends CI_Model
             'video' => $video,
             'pointer' => $pointer,
             'area' => $area,
+            'mobile' => $mobile,
             'logo' => $logo
 		);
 		$query=$this->db->insert( 'listing', $data );
@@ -179,7 +180,7 @@ class Listing_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area)
+	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)
 	{
 		$data  = array(
 			'name' => $name,
@@ -207,6 +208,7 @@ class Listing_model extends CI_Model
             'video' => $video,
             'pointer' => $pointer,
             'area' => $area,
+            'mobile' => $mobile,
             'logo' => $logo
 		);
 		
@@ -454,18 +456,37 @@ WHERE `listingcategory`.`category`='$id' ";
         {
 //            echo $row['name'];
             $address=$row['address1']."".$row['address2']."".$row['address3'];
-            if($row['tel2']=="" && $row['mobile']=="")
+            
+//            if($row['tel2']=="" && $row['mobile']=="")
+//            {
+//            $contact=$row['tel1'];
+//            }
+//            elseif($row['mobile']=="")
+//            {
+//            $contact=$row['tel1']."/".$row['tel2'];
+//            }
+//            else
+//            {
+//            $contact=$row['tel1']."/".$row['tel2']."/".$row['mobile'];
+//            }
+            
+            if($row['tel1']=="" && $row['tel2']=="")
             {
-            $contact=$row['tel1'];
+                $contact="";
             }
-            elseif($row['mobile']=="")
+            else if($row['tel1']=="")
             {
-            $contact=$row['tel1']."/".$row['tel2'];
+                $contact=$row['tel2'];
+            }
+            else if($row['tel2']=="")
+            {
+                $contact=$row['tel1'];
             }
             else
             {
-            $contact=$row['tel1']."/".$row['tel2']."/".$row['mobile'];
+                $contact=$row['tel1']."/".$row['tel2'];
             }
+            
             
             $city=$row['city'];
             $cityquery=$this->db->query("SELECT * FROM `city` where `name`LIKE '$city'")->row();
@@ -487,8 +508,22 @@ WHERE `listingcategory`.`category`='$id' ";
                 'city' => $cityid,
                 'area' => $row['address3'],
                 'pincode' => $row['pincode'],
-                'state' => 'Maharashtra',
-                'country' => 'India',
+//                'state' => 'Maharashtra',
+//                'country' => 'India',
+                'mobile' => $row['mobile'],
+                'state' => $row['state'],
+                'country' => $row['country'],
+                'description' => $row['description'],
+                'email' => $row['email'],
+                'website' => $row['website'],
+                'facebook' => $row['facebook'],
+                'googleplus' => $row['googleplus'],
+                'twitter' => $row['twitter'],
+                'timeofoperation_start' => $row['timeofoperation_start'],
+                'timeofoperation_end' => $row['timeofoperation_end'],
+                'credits' => $row['credits'],
+                'video' => $row['video'],
+                'area' => $row['area'],
                 'contactno' => $contact
             );
 

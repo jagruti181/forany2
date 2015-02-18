@@ -123,10 +123,19 @@
 				
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Contact</label>
+				  <span>Please use "/" to seperate two numbers</span>
 				  <div class="col-sm-4">
-					<input type="number" id="normal-field" class="form-control" name="contact" value="<?php echo set_value('contact');?>">
+					<input type="text" id="normal-field" class="form-control" name="contact" value="<?php echo set_value('contact');?>">
 				  </div>
 				</div>
+				
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label" for="normal-field">Mobile Number</label>
+				  <div class="col-sm-4">
+					<input type="text" id="normal-field" class="form-control" name="mobile" value="<?php echo set_value('mobile');?>">
+				  </div>
+				</div>
+				
 				
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Email</label>

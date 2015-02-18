@@ -1200,6 +1200,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('video','video','trim');
 		$this->form_validation->set_rules('pointer','pointer','trim');
 		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('mobile','mobile','trim');
         
 		if($this->form_validation->run() == FALSE)	
 		{
@@ -1243,6 +1244,7 @@ class Site extends CI_Controller
 			$video=$this->input->post('video');
 			$pointer=$this->input->post('pointer');
 			$area=$this->input->post('area');
+			$mobile=$this->input->post('mobile');
             
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
@@ -1283,7 +1285,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area)==0)
+			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)==0)
 			$data['alerterror']="New listing could not be created.";
 			else
 			$data['alertsuccess']="listing created Successfully.";
@@ -1351,6 +1353,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('video','video','trim');
 		$this->form_validation->set_rules('pointer','pointer','trim');
 		$this->form_validation->set_rules('area','area','trim');
+		$this->form_validation->set_rules('mobile','mobile','trim');
         
 		if($this->form_validation->run() == FALSE)	
 		{
@@ -1399,6 +1402,7 @@ class Site extends CI_Controller
 			$video=$this->input->post('video');
 			$pointer=$this->input->post('pointer');
 			$area=$this->input->post('area');
+			$mobile=$this->input->post('mobile');
             
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
@@ -1444,7 +1448,7 @@ class Site extends CI_Controller
                 $logo=$logo->logo;
             }
             
-			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area)==0)
+			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)==0)
 			$data['alerterror']="listing Editing was unsuccesful";
 			else
 			$data['alertsuccess']="listing edited Successfully.";
