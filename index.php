@@ -54,6 +54,7 @@
 <!--    <script src="lib/js/miniPopup.js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+    <script src="bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>
    
     
 <!--    toster-->
