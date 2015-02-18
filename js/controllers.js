@@ -4,7 +4,7 @@ var city = '';
 var area = '';
 var pat = '\home';
 var cityis = {};
-var phonecatControllers = angular.module('phonecatControllers', ['templateservicemod', 'restservice', 'ngRoute', 'angularFileUpload', 'ngTagsInput', 'ngDialog', 'google-maps', 'toaster']);
+var phonecatControllers = angular.module('phonecatControllers', ['templateservicemod', 'restservice', 'ngRoute', 'angularFileUpload', 'ngTagsInput', 'ngDialog', 'google-maps', 'toaster', 'geolocation']);
 
 window.uploadUrl = 'upload.php';
 
