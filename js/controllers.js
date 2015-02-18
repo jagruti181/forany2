@@ -1302,12 +1302,11 @@ phonecatControllers.controller('listbusiness',
         //        start on listbusiness submit
 
         var listingsuccess = function (data, status) {
-
             console.log(data);
-            if (data == 1) {
-                alert("Listing Saved");
+            if (data == "1") {
+                toaster.pop('success', "Listing ", "Listing saved successfully", 5000);
             } else {
-                alert("ERROR IN SAVING");
+                toaster.pop('error', "Listing ", "Unable to save the listing", 5000);
             }
 
         };
