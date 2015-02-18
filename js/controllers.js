@@ -1316,7 +1316,8 @@ phonecatControllers.controller('listbusiness',
         $scope.submitlist = function (list) {
             $scope.logo = $(".myiframe").contents().find("body img").attr("src");
             $scope.logo = $scope.logo.split('/');
-            list.logo = $scope.logo['4'];
+            console.log($scope.logo);
+            list.logo = $scope.logo['3'];
             //            $scope.video = $(".myiframe1").contents().find("body img").attr("src");
             //                $scope.video = $scope.video.split('/');
             //                list.video = $scope.video['4'];
