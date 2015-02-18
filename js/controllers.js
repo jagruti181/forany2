@@ -959,10 +959,6 @@ phonecatControllers.controller('OtherCtrl',
         $scope.changepasswordvisible = "false";
     
         
-        if($scope.juser.password)
-        {
-            $scope.changepasswordvisible = "true";
-        }
 
         $scope.showhidediv = function (){
             if($scope.profilepasword == "false")
@@ -989,6 +985,11 @@ phonecatControllers.controller('OtherCtrl',
                 } else {
                     $scope.signuppro = "My Profile";
                     $scope.loginlogout = "Logout";
+                    
+                    if($scope.juser.password)
+                    {
+                        $scope.changepasswordvisible = "true";
+                    }
                     $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
                 }
         }
