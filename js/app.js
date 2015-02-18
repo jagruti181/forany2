@@ -6,12 +6,12 @@ var firstapp = angular.module('firstapp', [
   'templateservicemod',
     'ui.bootstrap',
     'ui.utils'
-    
+
 ]);
 
 firstapp.config(['$routeProvider',
                  function ($routeProvider, $routeParams) {
-                     $routeProvider.
+        $routeProvider.
         when('/home', {
             templateUrl: 'views/template.html',
             controller: 'home'
@@ -73,12 +73,12 @@ firstapp.config(['$routeProvider',
 firstapp.filter('imagepath', function () {
     return function (input) {
         if (input == "") {
-//            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
-//                        return "http://localhost/foranyinformation/assets/img/default.jpg";
-                        return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+            //            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
+            //                        return "http://localhost/foranyinformation/assets/img/default.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
         } else {
-//            return "http://mafiawarloots.com/foranyinformation/uploads/" + input;
-//            return "http://localhost/foranyinformation/uploads/" + input;
+            //            return "http://mafiawarloots.com/foranyinformation/uploads/" + input;
+            //            return "http://localhost/foranyinformation/uploads/" + input;
             return "http://www.foranyinformation.com/admin/uploads/" + input;
         }
     };
@@ -87,13 +87,13 @@ firstapp.filter('imagepath', function () {
 firstapp.filter('imagepath2', function () {
     return function (input) {
         if (input == "") {
-//            return "http://mafiawarloots.com/anyinform/assets/img/default.jpg";
-//          return "http://localhost/foranyinformation/assets/img/default.jpg";
-          return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+            //            return "http://mafiawarloots.com/anyinform/assets/img/default.jpg";
+            //          return "http://localhost/foranyinformation/assets/img/default.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
         } else {
-//            return "http://mafiawarloots.com/anyinform/lib/images/" + input;
-//          return "http://localhost/foranyinformation/uploads/" + input;
-          return "http://www.foranyinformation.com/admin/uploads/" + input;
+            //            return "http://mafiawarloots.com/anyinform/lib/images/" + input;
+            //          return "http://localhost/foranyinformation/uploads/" + input;
+            return "http://www.foranyinformation.com/admin/uploads/" + input;
         }
     };
 });
@@ -101,13 +101,23 @@ firstapp.filter('imagepath2', function () {
 firstapp.filter('imagepath1', function () {
     return function (input) {
         if (input == "") {
-//            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
-//            return "http://localhost/foranyinformation/assets/img/default.jpg";
+            //            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
+            //            return "http://localhost/foranyinformation/assets/img/default.jpg";
             return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
         } else {
-//            return "http://mafiawarloots.com/foranyinformation/lib/images/" + input;
-//            return "http://localhost/foranyinformation/lib/images/" + input;
+            //            return "http://mafiawarloots.com/foranyinformation/lib/images/" + input;
+            //            return "http://localhost/foranyinformation/lib/images/" + input;
             return "http://www.foranyinformation.com/admin/lib/images/" + input;
+        }
+    };
+});
+
+firstapp.filter('imagepath3', function () {
+    return function (input) {
+        if (input == "") {
+            return "http://www.foranyinformation.com/admin/lib/images/ad/ad.jpg";
+        } else {
+            return "http://www.foranyinformation.com/admin/uploads/" + input;
         }
     };
 });
@@ -119,40 +129,45 @@ firstapp.filter('imagepath1', function () {
 // end angular map directive
 
 
-var rad = function(x) {
+var rad = function (x) {
     return x * Math.PI / 180;
 };
 
-var formvalidation = function(allvalidation) {
-            var isvalid2 = true;
-            var error = '';
-            for (var i = 0; i < allvalidation.length; i++) {
-                console.log("checking");
-                console.log(allvalidation[i].field);
-                console.log(allvalidation[i].name)
-                if (allvalidation[i].field == "" || !allvalidation[i].field) {
-                    allvalidation[i].validation = "ng-dirty";
-                    if( error == '' )
-                    {
-                        error += allvalidation[i].name;
-                    }else{
-                        error += " , " + allvalidation[i].name;
-                    }
-                    isvalid2 = false;
-                }
+var formvalidation = function (allvalidation) {
+    var isvalid2 = true;
+    var error = '';
+    for (var i = 0; i < allvalidation.length; i++) {
+        console.log("checking");
+        console.log(allvalidation[i].field);
+        console.log(allvalidation[i].name)
+        if (allvalidation[i].field == "" || !allvalidation[i].field) {
+            allvalidation[i].validation = "ng-dirty";
+            if (error == '') {
+                error += allvalidation[i].name;
+            } else {
+                error += " , " + allvalidation[i].name;
             }
-            return error;
-        };
+            isvalid2 = false;
+        }
+    }
+    return error;
+};
 
 
 
 
 
-var getDistance = function(lat1,long1,lat2,long2) {
+var getDistance = function (lat1, long1, lat2, long2) {
     var R = 6378.137; // Earth’s mean radius in km
-    var p1={lat:lat1,lng:long1};
-    var p2={lat:lat2,lng:long2};
-    
+    var p1 = {
+        lat: lat1,
+        lng: long1
+    };
+    var p2 = {
+        lat: lat2,
+        lng: long2
+    };
+
     var dLat = rad(p2.lat - p1.lat);
     var dLong = rad(p2.lng - p1.lng);
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -162,39 +177,39 @@ var getDistance = function(lat1,long1,lat2,long2) {
     var d = R * c;
     return d; // returns the distance in km
 };
-var cat=[];
-var addcategory = function (data){
+var cat = [];
+var addcategory = function (data) {
     console.log(data);
     cat.push(data.name);
     console.log(cat);
 }
 
 firstapp.directive("treeModel", function ($compile) {
-        return {
-            restrict: "A",
-            link: function (a, g, c) {
-                var e = c.treeModel,
-                    h = c.nodeLabel || "label",
-                    d = c.nodeChildren || "children",
-                    k = '<ul><li data-ng-repeat="node in ' + e + '"><i class="collapsed" data-ng-init="node.collapsed=true" data-ng-show="node.' + d + '.length && node.collapsed" data-ng-click="selectNodeHead(node, $event)"></i><i class="expanded" data-ng-show="node.' + d + '.length && !node.collapsed" data-ng-click="selectNodeHead(node, $event)"></i><i class="normal" data-ng-hide="node.' +
-                    d + '.length"></i> <span data-ng-class="node.selected" data-ng-click="selectNodeLabel(node, $event)">{{node.' + h + '}}</span><div data-ng-hide="node.collapsed" data-tree-model="node.' + d + '" data-node-id=' + (c.nodeId || "id") + " data-node-label=" + h + " data-node-children=" + d + "></div></li></ul>";
-                e && e.length && (c.angularTreeview ? (a.$watch(e, function (m, b) {
-                    g.empty().html($compile(k)(a))
-                }, !1), a.selectNodeHead = a.selectNodeHead || function (a, b) {
-                    b.stopPropagation && b.stopPropagation();
-                    b.preventDefault && b.preventDefault();
-                    b.cancelBubble = !0;
-                    b.returnValue = !1;
-                    a.collapsed = !a.collapsed
-                }, a.selectNodeLabel = a.selectNodeLabel || function (c, b) {
-                    b.stopPropagation && b.stopPropagation();
-                    b.preventDefault && b.preventDefault();
-                    b.cancelBubble = !0;
-                    b.returnValue = !1;
-                    a.currentNode && a.currentNode.selected && (a.currentNode.selected = void 0);
-                    c.selected = "selected";
-                    a.currentNode = c
-                }) : g.html($compile(k)(a)))
-            }
+    return {
+        restrict: "A",
+        link: function (a, g, c) {
+            var e = c.treeModel,
+                h = c.nodeLabel || "label",
+                d = c.nodeChildren || "children",
+                k = '<ul><li data-ng-repeat="node in ' + e + '"><i class="collapsed" data-ng-init="node.collapsed=true" data-ng-show="node.' + d + '.length && node.collapsed" data-ng-click="selectNodeHead(node, $event)"></i><i class="expanded" data-ng-show="node.' + d + '.length && !node.collapsed" data-ng-click="selectNodeHead(node, $event)"></i><i class="normal" data-ng-hide="node.' +
+                d + '.length"></i> <span data-ng-class="node.selected" data-ng-click="selectNodeLabel(node, $event)">{{node.' + h + '}}</span><div data-ng-hide="node.collapsed" data-tree-model="node.' + d + '" data-node-id=' + (c.nodeId || "id") + " data-node-label=" + h + " data-node-children=" + d + "></div></li></ul>";
+            e && e.length && (c.angularTreeview ? (a.$watch(e, function (m, b) {
+                g.empty().html($compile(k)(a))
+            }, !1), a.selectNodeHead = a.selectNodeHead || function (a, b) {
+                b.stopPropagation && b.stopPropagation();
+                b.preventDefault && b.preventDefault();
+                b.cancelBubble = !0;
+                b.returnValue = !1;
+                a.collapsed = !a.collapsed
+            }, a.selectNodeLabel = a.selectNodeLabel || function (c, b) {
+                b.stopPropagation && b.stopPropagation();
+                b.preventDefault && b.preventDefault();
+                b.cancelBubble = !0;
+                b.returnValue = !1;
+                a.currentNode && a.currentNode.selected && (a.currentNode.selected = void 0);
+                c.selected = "selected";
+                a.currentNode = c
+            }) : g.html($compile(k)(a)))
         }
-    });
+    }
+});

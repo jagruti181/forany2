@@ -22,42 +22,41 @@ phonecatControllers.controller('home',
         $scope.searchid = "";
         $scope.form = [];
         $scope.city = '';
-//        $scope.changepasswordvisible = "false";
+        //        $scope.changepasswordvisible = "false";
 
         var callback = function () {
             $scope.juser = RestService.getjuser();
-                if ($scope.juser == null) {
-                    $scope.signuppro = "Sign Up";
-                    $scope.loginlogout = "Login";
-                } else {
-                    $scope.signuppro = "My Profile";
-                    $scope.loginlogout = "Logout";
-//                    if($scope.juser.password)
-//                    {
-//                        $scope.changepasswordvisible = "true";
-//                    }
-                    $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
-                }
+            if ($scope.juser == null) {
+                $scope.signuppro = "Sign Up";
+                $scope.loginlogout = "Login";
+            } else {
+                $scope.signuppro = "My Profile";
+                $scope.loginlogout = "Logout";
+                //                    if($scope.juser.password)
+                //                    {
+                //                        $scope.changepasswordvisible = "true";
+                //                    }
+                $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+            }
         }
-    
+
         var authsuccess = function (data, status) {
-            
+
             console.log("auth auth success");
             console.log(data);
             console.log("auth authe success end");
-            
-            if(data != "false" && !data.accesslevel)
-            {
-                RestService.setjusera(data,callback);
-                
+
+            if (data != "false" && !data.accesslevel) {
+                RestService.setjusera(data, callback);
+
             }
-            
+
         };
-    
+
         RestService.authenticate().success(authsuccess);
-    
+
         $scope.pop = function () {
-//            console.log("on pop");
+            //            console.log("on pop");
             toaster.pop('success', "title", "<button>ok</button>", null, 'trustedHtml');
 
         };
@@ -77,7 +76,7 @@ phonecatControllers.controller('home',
         // set banner
         var bannersuccess = function (data, status) {
             $scope.banner = data.banner;
-//            console.log(RestService.setbanner(data.banner));
+            //            console.log(RestService.setbanner(data.banner));
             $location.url('/subcategory/' + data.id);
         };
         $scope.oncategoryclick = function (banner) {
@@ -95,19 +94,19 @@ phonecatControllers.controller('home',
                     $scope.positiontwo = data[i].adds;
                 }
             }
-            
+
             $scope.positiontwo[0].active = "active";
             $scope.positionone[0].active = "active";
-            
-//            for(var j = 0 ; j < $scope.positionone.length ; j++)
-//            {
-//                $scope.positionone[0]
-//            }
-            
-//            console.log("one");
-//            console.log($scope.positionone);
-//            console.log("two");
-//            console.log($scope.positiontwo);
+
+            //            for(var j = 0 ; j < $scope.positionone.length ; j++)
+            //            {
+            //                $scope.positionone[0]
+            //            }
+
+            //            console.log("one");
+            //            console.log($scope.positionone);
+            //            console.log("two");
+            //            console.log($scope.positiontwo);
         };
 
         RestService.alladd().success(addsuccess);
@@ -116,35 +115,40 @@ phonecatControllers.controller('home',
 
         //  get area from city
         $scope.area = "";
+        $scope.prefixnum = "022"
 
         function showPosition2(position) {
             var latlon = position.coords.latitude + "," + position.coords.longitude;
-//            console.log("Positions:.........");
-//            console.log(position.coords);
+            console.log(position);
             //$scope.coords = position.coords;
             lat = position.coords.latitude;
             long = position.coords.longitude;
 
             $.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyDqN3t8_Nb04MF7jTufq-bkEHogZxyeUHY", {}, function (data) {
-//                console.log(data);
+                console.log(data);
                 data = data.results[0].address_components;
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].types[0] == "locality") {
                         cityis.selected = data[i].long_name;
-//                        console.log(cityis.selected);
+                        //                        console.log(cityis.selected);
+                        if (cityis.selected == "Mumbai") {
+                            $scope.prefixnum = "";
+                        }
                     }
+
                     if (data[i].types[0] == "sublocality_level_1") {
                         //                        cityis.selected = data[i].long_name;
                         area = data[i].long_name;
                         $scope.area1 = data[i].long_name;
                         $scope.area = data[i].long_name;
+
                     }
                 }
                 var citywegot = 9;
                 var cities = $scope.cities;
                 for (var i = 0; i < $scope.cities.length; i++) {
 
-//                    console.log($scope.cities[i].name == cityis.selected);
+                    //                    console.log($scope.cities[i].name == cityis.selected);
                     if ($scope.cities[i].name == cityis.selected) {
                         $scope.city = $scope.cities[i].name;
                         citywegot = $scope.cities[i].id;
@@ -207,14 +211,13 @@ phonecatControllers.controller('home',
 
             }
             for (var i = 0; i < data.length; i++) {
-                
-                if(data[i].dist!=null && data[i].dist!='')
-                {
+
+                if (data[i].dist != null && data[i].dist != '') {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) " + data[i].dist + " KM ";
-                }else{
+                } else {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) ";
                 }
-                
+
             }
         };
         $scope.searchlist = function (text, city) {
@@ -252,8 +255,8 @@ phonecatControllers.controller('home',
         // searching 
 
         //        var searchdata = function (data, status) {
-//                    console.log("in home");
-//                    console.log(data);
+        //                    console.log("in home");
+        //                    console.log(data);
         //        };
         //        RestService.searchcategory("h").success(searchdata);
 
@@ -324,12 +327,12 @@ phonecatControllers.controller('category',
             $scope.allvalidation = [];
             if (data == "1") {
                 //                $scope.enquiryshow = true;
-//                $scope.enquirymsg = "Enquiry Send successfuly";
+                //                $scope.enquirymsg = "Enquiry Send successfuly";
                 toaster.pop('success', "Enquiry", "Enquiry Send successfuly", 5000);
 
             } else {
                 //                $scope.enquiryshow = true;
-//                $scope.enquirymsg = "Sorry, Try again later";
+                //                $scope.enquirymsg = "Sorry, Try again later";
                 toaster.pop('error', "Enquiry", "Sorry, Try again later", 5000);
             }
         };
@@ -356,11 +359,11 @@ phonecatControllers.controller('category',
 
             var check = formvalidation($scope.allvalidation);
 
-            if ( check == '' ) {
+            if (check == '') {
                 RestService.enquiryuser(enquiry.name, $scope.listingid, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
             } else {
                 console.log("not ckeck");
-                toaster.pop('error', "Enquiry", "Enter Proper "+check, 5000);
+                toaster.pop('error', "Enquiry", "Enter Proper " + check, 5000);
             }
 
 
@@ -436,8 +439,8 @@ phonecatControllers.controller('category',
         }
 
         //        var getuser = function (data, status) {
-//                    console.log("my data");
-//                    console.log(data);
+        //                    console.log("my data");
+        //                    console.log(data);
         //            if (data == "false") {
         //                $scope.user = 0;
         //            } else {
@@ -606,12 +609,12 @@ phonecatControllers.controller('detail',
             console.log(data);
             if (data == "1") {
                 //                $scope.enquiryshow = true;
-//                $scope.enquirymsg = "Enquiry Send successfuly";
+                //                $scope.enquirymsg = "Enquiry Send successfuly";
                 toaster.pop('success', "Enquiry", "Enquiry Send successfuly", 5000);
 
             } else {
                 //                $scope.enquiryshow = true;
-//                $scope.enquirymsg = "Sorry, Try again later";
+                //                $scope.enquirymsg = "Sorry, Try again later";
                 toaster.pop('error', "Enquiry", "Sorry, Try again later", 5000);
             }
         };
@@ -638,10 +641,10 @@ phonecatControllers.controller('detail',
 
             var check = formvalidation($scope.allvalidation);
 
-            if ( check == '' ) {
+            if (check == '') {
                 RestService.enquiryuser(enquiry.name, $scope.detail.listing.listingid, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
             } else {
-                toaster.pop('error', "Enquiry", "Enter Proper "+check, 5000);
+                toaster.pop('error', "Enquiry", "Enter Proper " + check, 5000);
             }
 
 
@@ -663,11 +666,11 @@ phonecatControllers.controller('changepassword',
         TemplateService.content = "views/changepassword.html";
         TemplateService.slider = false;
         TemplateService.navigation = "views/innerheader.html";
-    
+
         $scope.login = [];
         $scope.allvalidation = [];
-    
-//        jstorage user authentication start
+
+        //        jstorage user authentication start
         $scope.juser = RestService.getjuser();
         if ($scope.juser != null) {
 
@@ -678,19 +681,19 @@ phonecatControllers.controller('changepassword',
             $location.url("/login");
 
         }
-//        jstorage user authentication ends
-    
-        var changepasswordsuccess = function (data, status){
-            if( data == "1" ){
+        //        jstorage user authentication ends
+
+        var changepasswordsuccess = function (data, status) {
+            if (data == "1") {
                 $location.url("/home");
-            }else{
+            } else {
                 toaster.pop("error", "Change Password Error", "Wroung Password. ", 5000);
             }
         }
-        
+
         $scope.changepassword = function (login) {
             console.log(login);
-            
+
             //signup validation
             $scope.allvalidation = [{
                 field: $scope.login.oldpassword,
@@ -708,7 +711,7 @@ phonecatControllers.controller('changepassword',
 
             var check = formvalidation($scope.allvalidation);
 
-            if ( check == '' ) {
+            if (check == '') {
                 if ($scope.login.newpassword === $scope.login.confirmpassword) {
                     login.id = $scope.userdata;
                     RestService.changepass(login).success(changepasswordsuccess);
@@ -722,7 +725,7 @@ phonecatControllers.controller('changepassword',
             }
 
         }
-    
+
     });
 
 phonecatControllers.controller('profile',
@@ -752,8 +755,8 @@ phonecatControllers.controller('profile',
         }
 
         //        var getuser = function (data, status) {
-//                    console.log("my data");
-//                    console.log(data);
+        //                    console.log("my data");
+        //                    console.log(data);
         //            $scope.user = data;
         //            RestService.getuser(data).success(usersuccess);
         //        }
@@ -775,8 +778,8 @@ phonecatControllers.controller('profile',
         $scope.saveprofile = function (profile) {
             console.log("user in save profile");
             console.log(profile);
-//                        console.log($scope.profile);
-//                        console.log(profile);
+            //                        console.log($scope.profile);
+            //                        console.log(profile);
             //profile validation
             $scope.allvalidation1 = [{
                 field: $scope.profile.firstname,
@@ -791,7 +794,7 @@ phonecatControllers.controller('profile',
 
             var check = formvalidation($scope.allvalidation1);
 
-            if (check=='') {
+            if (check == '') {
                 console.log("yahooo...checked");
                 RestService.saveprofile(profile).success(profilesuccess);
 
@@ -840,18 +843,18 @@ phonecatControllers.controller('login',
 
             var check = formvalidation($scope.allvalidation1);
 
-            if ( check == '' ) {
+            if (check == '') {
 
                 RestService.login(login.email, login.password).success(loginsuccess);
 
             } else {
                 console.log("not ckeck");
-                toaster.pop('error', "Login", "Enter Proper "+check, 5000);
+                toaster.pop('error', "Login", "Enter Proper " + check, 5000);
             }
         }
         //    
         //        var getuser = function (data, status){
-//                    console.log(data);
+        //                    console.log(data);
         //        };
         //        RestService.authenticate().success(getuser);
         $scope.signupmsg = "";
@@ -872,8 +875,8 @@ phonecatControllers.controller('signup',
 
         $scope.signupmsg = "";
         $scope.signupmsgg = false;
-    
-//        login with facebook
+
+        //        login with facebook
         var onfacebooklogin = function (data, status) {
             console.log(data);
         };
@@ -881,7 +884,7 @@ phonecatControllers.controller('signup',
             console.log("facebook click");
             RestService.facebooklogin().success(onfacebooklogin);
         }
-    
+
         $scope.clickme = function () {
             console.log("helloooooo");
         }
@@ -926,7 +929,7 @@ phonecatControllers.controller('signup',
 
             var check = formvalidation($scope.allvalidation);
 
-            if ( check == '' ) {
+            if (check == '') {
                 if ($scope.signup.password === $scope.signup.cpassword) {
                     $scope.signupmsg = "";
                     console.log("phone no");
@@ -957,66 +960,64 @@ phonecatControllers.controller('OtherCtrl',
         $scope.myemail = "";
         $scope.profilepasword = "false";
         $scope.changepasswordvisible = "false";
-    
-        
 
-        $scope.showhidediv = function (){
-            if($scope.profilepasword == "false")
+
+
+        $scope.showhidediv = function () {
+            if ($scope.profilepasword == "false")
                 $scope.profilepasword = "true";
             else
                 $scope.profilepasword = "false";
         }
-    
+
         $scope.gotoprofile = function () {
             $location.url('/profile');
         }
-    
+
         $scope.gotochangepass = function () {
             $location.url('/changepassword');
         }
-        
-        
-        
+
+
+
         var callback = function () {
             $scope.juser = RestService.getjuser();
-                if ($scope.juser == null) {
-                    $scope.signuppro = "Sign Up";
-                    $scope.loginlogout = "Login";
-                } else {
-                    $scope.signuppro = "My Profile";
-                    $scope.loginlogout = "Logout";
-                    
-                    if($scope.juser.password)
-                    {
-                        $scope.changepasswordvisible = "true";
-                    }
-                    $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+            if ($scope.juser == null) {
+                $scope.signuppro = "Sign Up";
+                $scope.loginlogout = "Login";
+            } else {
+                $scope.signuppro = "My Profile";
+                $scope.loginlogout = "Logout";
+
+                if ($scope.juser.password) {
+                    $scope.changepasswordvisible = "true";
                 }
+                $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+            }
         }
-    
+
         var authsuccess = function (data, status) {
-            
+
             console.log("auth auth success");
             console.log(data);
             console.log("auth authe success end");
-            
-            if(data != "false" && !data.accesslevel)
-            {
-                RestService.setjusera(data,callback);
-                
+
+            if (data != "false" && !data.accesslevel) {
+                RestService.setjusera(data, callback);
+
             }
-            
+
         };
-    
+
         RestService.authenticate().success(authsuccess);
-        
+
         $scope.banner = RestService.getbanner();
         console.log("my banner//////////////////////////////");
         console.log(RestService.getbanner());
 
         //        toster function
         //        $scope.pop = function(){
-//                    console.log("on pop");
+        //                    console.log("on pop");
         //            toaster.pop('success', "title", "text");
         //        };
 
@@ -1110,10 +1111,9 @@ phonecatControllers.controller('OtherCtrl',
 
             }
             for (var i = 0; i < data.length; i++) {
-                if(data[i].dist!=null && data[i].dist!='')
-                {
+                if (data[i].dist != null && data[i].dist != '') {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) " + data[i].dist + " KM ";
-                }else{
+                } else {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) ";
                 }
             }
@@ -1134,8 +1134,8 @@ phonecatControllers.controller('OtherCtrl',
             console.log("city");
             console.log(text[1]);
             if (!text[1]) {
-                                $scope.area = '';
-//                $scope.area = $scope.area;
+                $scope.area = '';
+                //                $scope.area = $scope.area;
             } else {
                 $scope.area = text[1];
             }
@@ -1165,13 +1165,13 @@ phonecatControllers.controller('listbusiness',
         $scope.ipath = "views/f2.php?id=event";
         $scope.ipath1 = "views/f1.php?id=event";
         //    start my angular tree view
-    
-//        geolocation.getLocation().then(function(data){
-//            console.log(data);
-//          $scope.coords = {lat:data.coords.latitude, long:data.coords.longitude};
-//        });
-    
-    
+
+        //        geolocation.getLocation().then(function(data){
+        //            console.log(data);
+        //          $scope.coords = {lat:data.coords.latitude, long:data.coords.longitude};
+        //        });
+
+
         var gettreeview = function (data, status) {
             console.log(data);
             $scope.roleList = data.children;
@@ -1180,7 +1180,7 @@ phonecatControllers.controller('listbusiness',
         console.log("tree select");
         $scope.tagcategory = [];
         $scope.selectNodeLabel = function (c, b) {
-//                    console.log(c);
+            //                    console.log(c);
             //        if($scope.catgo=="")
             //        {
             //            $scope.catgo=c.id;
@@ -1237,7 +1237,7 @@ phonecatControllers.controller('listbusiness',
         }
 
         //        var getuser = function (data, status) {
-//                    console.log(data);
+        //                    console.log(data);
         //            if (data == "false") {
         //                $location.url("/login");
         //            } else {
@@ -1259,8 +1259,7 @@ phonecatControllers.controller('listbusiness',
 
         var mapp = function (data, state) {
             console.log(data);
-            if(data.error_message)
-            {
+            if (data.error_message) {
                 console.log("in");
                 toaster.pop("error", "Listing Error", "Error :" + data.error_message, 5000);
             }
@@ -1365,7 +1364,7 @@ phonecatControllers.controller('listbusiness',
 
             var check = formvalidation($scope.allvalidation);
 
-            if (check=='') {
+            if (check == '') {
                 list.user = $scope.userdata;
                 //                list.logo = "default.jpg";
                 list.city = list.city.split(",");
@@ -1507,7 +1506,7 @@ phonecatControllers.controller('MyCtrl',
                     $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
                 });
                 $scope.upload[index].xhr(function (xhr) {
-//                    				xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
+                    //                    				xhr.upload.addEventListener('abort', function() {console.log('abort complete')}, false);
                 });
             } else {
                 var fileReader = new FileReader();

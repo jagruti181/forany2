@@ -2,8 +2,8 @@
     <div class="container">
         <toaster-container></toaster-container>
         <div class="banner">
-            <img ng-src="{{'ad/ad.jpg' | imagepath1}}" ng-show="banner.banner==''" width="100%">
-            <img ng-src="{{'png/'+banner.banner | imagepath1}}" ng-show="banner.banner!=''" width="100%">
+            <img ng-src="{{banner.banner | imagepath3}}" ng-show="banner.banner==''" width="100%">
+<!--            <img ng-src="{{'png/'+banner.banner | imagepath1}}" ng-show="banner.banner!=''" width="100%">  'ad/ad.jpg'-->
         </div>
         <div class="row">
             <div class="col-sm-3">
