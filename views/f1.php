@@ -11,6 +11,7 @@
 <body style="background:rgba(246, 248, 250, 1);">
 
 <form method="POST" enctype="multipart/form-data">
+
 <?php
 $path="../../foranyinformation/uploads/C4.mp4";
 if(isset($_POST['reg']))
@@ -35,6 +36,8 @@ echo "<img src=".$path." height='200px' width='200px' style='display:none;'>"
     ?>
 
 <br><input type="file" name="a"/>
+<?php echo "heyyyyy" + $_SERVER['REQUEST_URI']; ?>
+
 <p>
     <input type="submit" class="btn btn-info" name="reg" value="Save Video"/></p>
 </form>
