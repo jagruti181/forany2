@@ -22,6 +22,7 @@ phonecatControllers.controller('home',
         $scope.searchid = "";
         $scope.form = [];
         $scope.city = '';
+//        $scope.changepasswordvisible = "false";
 
         var callback = function () {
             $scope.juser = RestService.getjuser();
@@ -31,6 +32,10 @@ phonecatControllers.controller('home',
                 } else {
                     $scope.signuppro = "My Profile";
                     $scope.loginlogout = "Logout";
+//                    if($scope.juser.password)
+//                    {
+//                        $scope.changepasswordvisible = "true";
+//                    }
                     $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
                 }
         }
@@ -951,7 +956,13 @@ phonecatControllers.controller('OtherCtrl',
         $scope.demo = "demo";
         $scope.myemail = "";
         $scope.profilepasword = "false";
+        $scope.changepasswordvisible = "false";
     
+        
+        if($scope.juser.password)
+        {
+            $scope.changepasswordvisible = "true";
+        }
 
         $scope.showhidediv = function (){
             if($scope.profilepasword == "false")

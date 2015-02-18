@@ -14,7 +14,7 @@
                             <div id="">
                                 <a class="onlycursor" ng-click="showhidediv()"><span class="symbol" style="font-size:13px; position: relative;left: 470px;top: 8px;color: #aeaeae;z-index:100000;">{{myemail}}</span></a>
                                 <div id="notificationContainer" style="display:inline;" ng-if="profilepasword">
-                                    <div id="notificationTitle"><a ng-click="gotoprofile()">Visit Profile</a><a ng-click="gotochangepass()">Change Password</a>
+                                    <div id="notificationTitle"><a ng-click="gotoprofile()">Visit Profile</a><a ng-click="gotochangepass()" ng-if="changepasswordvisible">Change Password</a>
                                     </div>
 
                                 </div>
