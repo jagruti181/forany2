@@ -113,13 +113,22 @@
 				  </div>
 				</div>
 				
-				
+				 
+                    <div class="form-group" >
+                        <label class="col-sm-2 control-label" for="normal-field">Description</label>
+                        <div class="col-sm-4">
+                            <textarea name="description" id="" cols="20" rows="10" class="form-control tinymce fielddescriptioninput"><?php echo set_value(' description ');?></textarea>
+
+                        </div>
+                    </div>
+<!--
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Description</label>
 				  <div class="col-sm-4">
 					<input type="text" id="normal-field" class="form-control" name="description" value="<?php echo set_value('description');?>">
 				  </div>
 				</div>
+-->
 				
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Contact</label>
@@ -132,10 +141,23 @@
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Mobile Number</label>
 				  <div class="col-sm-4">
-					<input type="text" id="normal-field" class="form-control" name="mobile" value="<?php echo set_value('mobile');?>">
+					<input type="tel" id="normal-field" class="form-control mobileval" name="mobile" value="<?php echo set_value('mobile');?>" onkeypress="return isNumberKey(event)">
+<span id="left" style="color: #bebebe;"/>
 				  </div>
 				</div>
-				
+				<script>
+                  $('.mobileval').limit('10','#left');
+                    
+                    function isNumberKey(evt)
+       {
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if (charCode != 46 && charCode > 31 
+            && (charCode < 48 || charCode > 57))
+             return false;
+
+          return true;
+       }
+                  </script>
 				
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Email</label>

@@ -554,7 +554,7 @@ phonecatControllers.controller('detail',
 
         $scope.imagelightbox = function (img) {
             ngDialog.open({
-                template: '<img src="http://mafiawarloots.com/foranyinformation/uploads/' + img + '" style="width:100%;height:auto;">',
+                template: '<img src="http://foranyinformation.com/admin/uploads/' + img + '" style="width:100%;height:auto;">',
                 plain: true
             });
         };

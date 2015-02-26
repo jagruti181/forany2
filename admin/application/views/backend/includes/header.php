@@ -31,6 +31,7 @@
     <script src="<?php echo base_url('assets/js/jstree.min.js'); ?>"></script>
     <script src="<?php echo base_url('assets/js/tree.jquery.js'); ?>"></script>
     <script src="<?php echo base_url('assets/js/chintantable.js'); ?>"></script>
+    <script src="http://jquery-limit.googlecode.com/files/jquery.limit-1.2.source.js"></script>
 <script>
 $(document).ready(function(){
 		$('.datetime').datepicker({
