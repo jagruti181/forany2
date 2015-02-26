@@ -1195,7 +1195,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('timeofoperation_start','timeofoperation_start','trim');
 		$this->form_validation->set_rules('timeofoperation_end','timeofoperation_end','trim');
 		$this->form_validation->set_rules('type','type','trim');
-		$this->form_validation->set_rules('credits','credits','trim');
+//		$this->form_validation->set_rules('credits','credits','trim');
 		$this->form_validation->set_rules('isverified','isverified','trim');
 		$this->form_validation->set_rules('video','video','trim');
 		$this->form_validation->set_rules('pointer','pointer','trim');
@@ -1348,7 +1348,7 @@ class Site extends CI_Controller
 		$this->form_validation->set_rules('timeofoperation_start','timeofoperation_start','trim');
 		$this->form_validation->set_rules('timeofoperation_end','timeofoperation_end','trim');
 		$this->form_validation->set_rules('type','type','trim');
-		$this->form_validation->set_rules('credits','credits','trim');
+//		$this->form_validation->set_rules('credits','credits','trim');
 		$this->form_validation->set_rules('isverified','isverified','trim');
 		$this->form_validation->set_rules('video','video','trim');
 		$this->form_validation->set_rules('pointer','pointer','trim');
@@ -3213,7 +3213,11 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-        $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
+        $cat=$this->category_model->getcategorytreeforlisting(0);
+        $cat1=$this->getarray($cat,"");
+        
+        $data['category']=$cat1;
+//        $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
 		$data[ 'page' ] = 'uploadlistingcsv';
 		$data[ 'title' ] = 'Upload Listing';
 		$this->load->view( 'template', $data );

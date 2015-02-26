@@ -521,7 +521,6 @@ WHERE `listingcategory`.`category`='$id' ";
                 'twitter' => $row['twitter'],
                 'timeofoperation_start' => $row['timeofoperation_start'],
                 'timeofoperation_end' => $row['timeofoperation_end'],
-                'credits' => $row['credits'],
                 'video' => $row['video'],
                 'area' => $row['area'],
                 'contactno' => $contact

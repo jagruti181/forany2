@@ -223,12 +223,14 @@
 				  </div>
 				</div>
 				
+<!--
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Credits</label>
 					<div class="col-sm-8">
 					  <input type="text" id="" name="credits" class="form-control" value="<?php echo set_value('credits',$before->credits); ?>">
 					</div>
 				</div>
+-->
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label">isverified</label>
 				  <div class="col-sm-8">
