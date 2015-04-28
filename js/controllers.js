@@ -22,9 +22,11 @@ phonecatControllers.controller('home',
         $scope.searchid = "";
         $scope.form = [];
         $scope.city = '';
+        $scope.changepasswordvisible = true;
         //        $scope.changepasswordvisible = "false";
 
         var callback = function () {
+            console.log("");
             $scope.juser = RestService.getjuser();
             if ($scope.juser == null) {
                 $scope.signuppro = "Sign Up";
@@ -36,7 +38,7 @@ phonecatControllers.controller('home',
                 //                    {
                 //                        $scope.changepasswordvisible = "true";
                 //                    }
-                $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+                $scope.myemail = "Welcome , " + $scope.juser.firstname + " " + $scope.juser.lastname;
             }
         }
 
@@ -961,8 +963,6 @@ phonecatControllers.controller('OtherCtrl',
         $scope.profilepasword = "false";
         $scope.changepasswordvisible = "false";
 
-
-
         $scope.showhidediv = function () {
             if ($scope.profilepasword == "false")
                 $scope.profilepasword = "true";
@@ -981,26 +981,28 @@ phonecatControllers.controller('OtherCtrl',
 
 
         var callback = function () {
-            $scope.juser = RestService.getjuser();
-            if ($scope.juser == null) {
-                $scope.signuppro = "Sign Up";
-                $scope.loginlogout = "Login";
-            } else {
-                $scope.signuppro = "My Profile";
-                $scope.loginlogout = "Logout";
-
-                if ($scope.juser.password) {
-                    $scope.changepasswordvisible = "true";
-                }
-                $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
-            }
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ss");
+//            $scope.juser = RestService.getjuser();
+//            console.log("user user");
+//            console.log($scope.juser);
+//            if ($scope.juser == null) {
+//                $scope.signuppro = "Sign Up";
+//                $scope.loginlogout = "Login";
+//            } else {
+//                $scope.signuppro = "My Profile";
+//                $scope.loginlogout = "Logout";
+//
+//                if ($scope.juser.password) {
+//                    $scope.changepasswordvisible = "false";
+//                }
+//                console.log($scope.juser);
+//                $scope.myemail = "Welcomesdfasd ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+//            }
         }
 
         var authsuccess = function (data, status) {
-
-            console.log("auth auth success");
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ss");
             console.log(data);
-            console.log("auth authe success end");
 
             if (data != "false" && !data.accesslevel) {
                 RestService.setjusera(data, callback);
@@ -1033,7 +1035,7 @@ phonecatControllers.controller('OtherCtrl',
             } else {
                 $scope.signuppro = "My Profile";
                 $scope.loginlogout = "Logout";
-                $scope.myemail = "Welcome ,  " + data.firstname;
+                $scope.myemail = "Welcome , " + data.firstname;
             }
         };
         //        RestService.authenticate().success(getuser);
@@ -1051,7 +1053,10 @@ phonecatControllers.controller('OtherCtrl',
         } else {
             $scope.signuppro = "My Profile";
             $scope.loginlogout = "Logout";
-            $scope.myemail = "Welcome ,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+            $scope.myemail = "Welcomes,  " + $scope.juser.firstname + " " + $scope.juser.lastname;
+            if($scope.juser.password){
+            $scope.changepasswordvisible = "true";
+            }
         }
 
 

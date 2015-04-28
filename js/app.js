@@ -72,10 +72,10 @@ firstapp.config(['$routeProvider',
 
 firstapp.filter('imagepath', function () {
     return function (input) {
-        if (input == "") {
-            //            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
-            //                        return "http://localhost/foranyinformation/assets/img/default.jpg";
-            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+        if (input == "" || input == null) {
+            //            return "http://mafiawarloots.com/foranyinformation/assets/img/NoImage.jpg";
+            //                        return "http://localhost/foranyinformation/assets/img/NoImage.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/NoImage.jpg";
         } else {
             //            return "http://mafiawarloots.com/foranyinformation/uploads/" + input;
             //            return "http://localhost/foranyinformation/uploads/" + input;
@@ -87,9 +87,9 @@ firstapp.filter('imagepath', function () {
 firstapp.filter('imagepath2', function () {
     return function (input) {
         if (input == "") {
-            //            return "http://mafiawarloots.com/anyinform/assets/img/default.jpg";
-            //          return "http://localhost/foranyinformation/assets/img/default.jpg";
-            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+            //            return "http://mafiawarloots.com/anyinform/assets/img/NoImage.jpg";
+            //          return "http://localhost/foranyinformation/assets/img/NoImage.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/NoImage.jpg";
         } else {
             //            return "http://mafiawarloots.com/anyinform/lib/images/" + input;
             //          return "http://localhost/foranyinformation/uploads/" + input;
@@ -101,9 +101,9 @@ firstapp.filter('imagepath2', function () {
 firstapp.filter('imagepath1', function () {
     return function (input) {
         if (input == "") {
-            //            return "http://mafiawarloots.com/foranyinformation/assets/img/default.jpg";
-            //            return "http://localhost/foranyinformation/assets/img/default.jpg";
-            return "http://www.foranyinformation.com/admin/assets/img/default.jpg";
+            //            return "http://mafiawarloots.com/foranyinformation/assets/img/NoImage.jpg";
+            //            return "http://localhost/foranyinformation/assets/img/NoImage.jpg";
+            return "http://www.foranyinformation.com/admin/assets/img/NoImage.jpg";
         } else {
             //            return "http://mafiawarloots.com/foranyinformation/lib/images/" + input;
             //            return "http://localhost/foranyinformation/lib/images/" + input;
@@ -114,7 +114,7 @@ firstapp.filter('imagepath1', function () {
 
 firstapp.filter('imagepath3', function () {
     return function (input) {
-        if (input == "") {
+        if (input == "" || input == "null") {
             return "http://www.foranyinformation.com/admin/lib/images/ad/ad.jpg";
         } else {
             return "http://www.foranyinformation.com/admin/uploads/" + input;

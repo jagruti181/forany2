@@ -1,6 +1,6 @@
 //var onlyadminurl = "http://mafiawarloots.com/foranyinformation/";
-//var onlyadminurl="http://localhost/foranyinformation/";
-var onlyadminurl="http://www.foranyinformation.com/admin/";
+var onlyadminurl="http://localhost/forany2/admin/";
+//var onlyadminurl="http://www.foranyinformation.com/admin/";
 var adminurl = onlyadminurl + "index.php/json/";
 //var adminurl="http://localhost/foranyinformation/index.php/json/";
 
@@ -37,7 +37,7 @@ var restservice = angular.module('restservice', [])
             $.jStorage.set('anyuser', data);
             callback();
         },
-        getjuser: function (data) {
+        getjuser: function () {
             return $.jStorage.get('anyuser');
         },
         getrecentvisit: function () {
