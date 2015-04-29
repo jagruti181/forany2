@@ -73,9 +73,9 @@
 
             <div class="col-md-12">
                 <div class="image-row">
-                   <div class="det-img">
-                    <img ng-src="{{img.image|imagepath}}" class="lightbox" ng-click="imagelightbox(img.image)" height="80px" width="150px" ng-repeat="img in detail.images">
-</div>
+                    <div class="det-img">
+                        <img ng-src="{{img.image|imagepath}}" class="lightbox" ng-click="imagelightbox(img.image)" height="80px" width="150px" ng-repeat="img in detail.images">
+                    </div>
 
 
                 </div>
@@ -93,8 +93,11 @@
                             <h2 class="title">More Information</h2>
                         </div>
 
-                        <p class="fapadl"><i class="fa fa-info-circle fapadr"></i>{{detail.listing.description}}</p>
-                        <p class="fapadl"><i class="fa fa-location-arrow fapadr"></i>&nbsp;{{detail.listing.address}}</p>
+                        <div  class="fapadl"><i class="fa fa-info-circle fapadr mk-id"></i>
+                        <p class="detail-add">{{detail.listing.description}}</p></div>
+                        <div class="fapadl"><i class="fa fa-location-arrow fapadr mk-id"></i>
+                            <p class="detail-add">{{detail.listing.address}}</p>
+                        </div>
                         <p class="fapadl"><i class="fa fa-mobile fapadr"></i>&nbsp;{{detail.listing.contactno}}</p>
                     </div>
                     <div class="more-text">
@@ -109,7 +112,7 @@
                             <h2 class="title">Hours Of Operation</h2>
                         </div>
                         <div class="fapd">
-                            <i class="fa fa-calendar"></i>  <strong class="fapadl mhs" ng-repeat="operation in detail.daysofoperation">{{operation.daysofoperationname}}&nbsp;&nbsp;</strong>
+                            <i class="fa fa-calendar"></i> <strong class="fapadl mhs" ng-repeat="operation in detail.daysofoperation">{{operation.daysofoperationname}}&nbsp;&nbsp;</strong>
                             <br>
                             <br>
 
@@ -176,7 +179,7 @@
                         </div>
                     </div>
                     <div class="video-you">
-                       <div my-youtube code="detail.listing.video"></div>
+                        <div my-youtube code="detail.listing.video"></div>
                     </div>
                     <!--
                     <video width="320" height="240" controls>
