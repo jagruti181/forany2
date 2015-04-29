@@ -1,0 +1,5 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Applications/XAMPP/xamppfiles/htdocs/forany2/bower_components/angularjs-geolocation/src/geolocation.js"
+    ]
+}

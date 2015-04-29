@@ -310,19 +310,18 @@ phonecatControllers.controller('category',
         $scope.demo = "hey hey hye";
         $scope.msg = "";
         $scope.msgarea = false;
-        //        $scope.listingid = '';
+                $scope.listingid = '';
         $scope.enquirymsg = '';
 
         $scope.onemailclick = function (listing) {
-            $scope.listingid = listing;
-            console.log("Demo is wokring");
+            console.log(listing);
+            $.jStorage.set("listingid",listing);
             ngDialog.open({
                 template: 'views/emailclick.html',
                 controller: 'category'
             });
         };
         //    enquiry for listing
-
         $scope.enquiry = [];
         var enquirysuccess = function (data, status) {
             console.log(data);
@@ -362,7 +361,9 @@ phonecatControllers.controller('category',
             var check = formvalidation($scope.allvalidation);
 
             if (check == '') {
-                RestService.enquiryuser(enquiry.name, $scope.listingid, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
+                ngDialog.close();
+                console.log($scope.listingid);
+                RestService.enquiryuser(enquiry.name, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
             } else {
                 console.log("not ckeck");
                 toaster.pop('error', "Enquiry", "Enter Proper " + check, 5000);
@@ -736,9 +737,11 @@ phonecatControllers.controller('profile',
         TemplateService.content = "views/profile.html";
         TemplateService.slider = false;
         TemplateService.navigation = "views/innerheader.html";
-
+        
         // controller vriables
         $scope.profile = [];
+        $scope.alertmsg = "alert-danger";
+        $scope.profilemsg = '';
 
         // user authentication
 
@@ -773,6 +776,7 @@ phonecatControllers.controller('profile',
             console.log(data);
             if (data == "1") {
                 $scope.profilemsg = "Profile Updated";
+                $scope.alertmsg = "alert-success";
             }
 
         };
