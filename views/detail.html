@@ -21,7 +21,7 @@
                     <div class="col-md-4">
                         <div class="media-body">
                             <h4 class="media-heading"><i class="fa fa-bookmark fapadr"></i><span>{{detail.listing.name}}</span></h4>
-                            <h6><i class="fa fa-location-arrow fapadr"></i><span class="med1">{{detail.listing.address}}</span></h6>
+                            <h6><i class="fa fa-location-arrow fapadr"></i><span class="med1">{{detail.listing.address | cut:true:50:' ...'}}</span></h6>
                             <h6><i class="fa fa-mobile fapadr"></i><span class="med2">{{detail.listing.contactno}}</span></h6>
                             <h6>
                                 <i class="fa fa-envelope fapadr"></i><a href="#enq"><span class="med3">Send Enquiry By Email</span></a>
@@ -176,8 +176,7 @@
                         </div>
                     </div>
                     <div class="video-you">
-                        <iframe width="84%" height="315" ng-src="//www.youtube.com/embed/{{detail.listing.video}}">
-                        </iframe>
+                       <div my-youtube code="detail.listing.video"></div>
                     </div>
                     <!--
                     <video width="320" height="240" controls>

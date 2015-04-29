@@ -7,6 +7,9 @@
                 <div class="list-head">
                     <h3>List Your Business</h3>
                 </div>
+                
+<!--                        <div class="alert" ng-class="alertmsg" role="alert" ng-if="profilemsg!=''">-->
+                        
                 <h5>Category List</h5>
                 <div class="list-back">
                     <div data-angular-treeview="true" data-tree-model="roleList" data-node-id="id" data-node-label="name">
@@ -19,9 +22,12 @@
             </div>
             <div class="col-md-9">
                 <div class="">
+                   
                     <div class="signup-list">
 
-
+                        <div class="alert" ng-class="listingclass" role="alert" ng-if="listingmsg!=''">
+                            {{listingmsg}}
+                        </div>
 
                         <h5>Name *</h5>
                         <!--
@@ -116,9 +122,9 @@
 
                         <h5>Description</h5>
                         <textarea ng-model="list.description" placeholder="Description" class="formselop form-control"></textarea>
-                        <h5>Contact Number</h5>
+                        <h5>Contact Number *</h5>
                         <input type="number" ng-model="list.contact" placeholder="Contact Number" class="form-control" ng-class="allvalidation[9].validation" required />
-                        <h5>Email</h5>
+                        <h5>Email *</h5>
                         <input type="email" ng-model="list.email" placeholder="Email" class="form-control" ng-class="allvalidation[11].validation" required />
                         <h5>Website</h5>
                         <input type="text" ng-model="list.website" class="form-control" placeholder="Website" />
@@ -134,7 +140,7 @@
                         <input type="text" ng-model="list.timeofoperationstart" class="form-control" placeholder="Time Of Operation Start" />
                         <h5>Time Of Operation Ends</h5>
                         <input type="text" ng-model="list.timeofoperationend" class="form-control" placeholder="Time Of Operation Ends" />
-                        <h5>Type</h5>
+                        <h5>Type *</h5>
                         <select ng-model="list.type" class="formselop form-control" ng-class="allvalidation[12].validation" required>
                             <option ng-repeat="type in alljson.type" value="{{type.id}}">{{type.name}}</option>
                         </select>
@@ -189,8 +195,14 @@
 -->
 
                         <!--							end angular image upload-->
+                        
+                        <div class="alert" ng-class="listingclass" role="alert" ng-if="listingmsg!=''">
+                            {{listingmsg}}
+                        </div>
 
                         <button class="btn" ng-click="submitlist(list)">Create Listing</button>
+                        <button class="btn" ng-click="createNew()">Crete New</button>
+                        
 
                     </div>
                 </div>

@@ -155,9 +155,44 @@ var formvalidation = function (allvalidation) {
     return error;
 };
 
+firstapp.directive('myYoutube', function ($sce) {
+    return {
+        restrict: 'EA',
+        scope: {
+            code: '='
+        },
+        replace: true,
+        template: '<iframe style="overflow:hidden;height:100%;width:84%" src="{{url}}" frameborder="0" allowfullscreen></iframe>',
+        link: function (scope) {
+            console.log('here');
+            scope.$watch('code', function (newVal) {
+                if (newVal) {
+                    scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/embed/" + newVal);
+                }
+            });
+        }
+    };
+});
 
+firstapp.filter('cut', function () {
+    return function (value, wordwise, max, tail) {
+        if (!value) return '';
 
+        max = parseInt(max, 10);
+        if (!max) return value;
+        if (value.length <= max) return value;
 
+        value = value.substr(0, max);
+        if (wordwise) {
+            var lastspace = value.lastIndexOf(' ');
+            if (lastspace != -1) {
+                value = value.substr(0, lastspace);
+            }
+        }
+
+        return value + (tail || ' …');
+    };
+});
 
 var getDistance = function (lat1, long1, lat2, long2) {
     var R = 6378.137; // Earth’s mean radius in km

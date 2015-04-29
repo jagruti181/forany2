@@ -1173,6 +1173,9 @@ phonecatControllers.controller('listbusiness',
         $scope.demo = "";
         $scope.ipath = "views/f2.php?id=event";
         $scope.ipath1 = "views/f1.php?id=event";
+    
+        $scope.listingmsg = "";
+        $scope.listingclass = "";
         //    start my angular tree view
 
         //        geolocation.getLocation().then(function(data){
@@ -1312,10 +1315,15 @@ phonecatControllers.controller('listbusiness',
 
         var listingsuccess = function (data, status) {
             console.log(data);
+            data = JSON.parse(data);
             if (data == "1") {
-                toaster.pop('success', "Listing ", "Listing saved successfully", 5000);
+                $scope.listingmsg = "Listing saved successfully";
+                $scope.listingclass = "alert-success";
+//                toaster.pop('success', "Listing ", "Listing saved successfully", 5000);
             } else {
-                toaster.pop('error', "Listing ", "Unable to save the listing", 5000);
+                $scope.listingmsg = "Unable to save the listing";
+                $scope.listingclass = "alert-danger";
+//                toaster.pop('error', "Listing ", "Unable to save the listing", 5000);
             }
 
         };
@@ -1398,6 +1406,13 @@ phonecatControllers.controller('listbusiness',
         RestService.getallcategory().success(allcategories);
 
         //        end get category all category
+    
+        //  CREATE NEW LISTING
+        $scope.createNew = function () {
+            console.log("new listing");
+//            $location.url("/listbusiness");
+            window.location.reload();
+        }
 
     });
 phonecatControllers.controller('portfolio', ['$scope', 'TemplateService',

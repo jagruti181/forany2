@@ -71,7 +71,6 @@ $db['default']['stricton'] = FALSE;
 }
 else
 {
-
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';

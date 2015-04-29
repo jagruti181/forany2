@@ -61,7 +61,7 @@
                                 </a>
                                 <div class="media-body">
                                     <h4 class="media-heading onlycursor" ng-click="linkclick(list.listing)"><i class="fa fa-bookmark"></i><span>{{list.name}}</span></h4>
-                                    <p><i class="fa fa-location-arrow"></i><span class="med1">{{list.address}}</p>
+                                    <p><i class="fa fa-location-arrow"></i><span class="med1">{{list.address | cut:true:50:' ...'}}</p>
                             <p><i class="fa fa-mobile"></i><span class="med2">{{list.contactno}}</p>
 							<div class="social-icons pull-laft">
 							<div class="cat-btn" style="margin: -9px auto;">
