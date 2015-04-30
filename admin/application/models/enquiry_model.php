@@ -39,8 +39,7 @@ class Enquiry_model extends CI_Model
 			'name' => $name,
 			'email' => $email,
 			'phone' => $phone,
-			'enquiryfrom' => 2,
-            'timestamp'=>NULL
+			'enquiryfrom' => 2
 		);
 		$query=$this->db->insert( 'enquiry', $data );
 		$enquiryid=$this->db->insert_id();
@@ -52,7 +51,7 @@ class Enquiry_model extends CI_Model
 		else
 			return  1;
 	}
-    public function createlistingcategory($enquiryid,$listing,$category,$typeofenquiry,$comment)
+    public function createlistingcategory($email,$listing,$category,$typeofenquiry,$comment)
 	{
 //		$data  = array(
 //			'name' => $name,
@@ -63,6 +62,18 @@ class Enquiry_model extends CI_Model
 //		$query=$this->db->insert( 'enquiry', $data );
 //		$enquiryid=$this->db->insert_id();
 //        
+        $queryenquirydataselect=$this->db->query("SELECT `id`, `name`, `email`, `phone`, `timestamp`, `deletestatus`, `enquiryfrom` FROM `enquiry` WHERE `email`='$email'")->row();
+        $name=$queryenquirydataselect->name;
+        $phone=$queryenquirydataselect->phone;
+		$data  = array(
+			'name' => $name,
+			'email' => $email,
+			'phone' => $phone,
+			'enquiryfrom' => 2
+		);
+		$query=$this->db->insert( 'enquiry', $data );
+		$enquiryid=$this->db->insert_id();
+        
         $queryenquirylistingcategory=$this->db->query("INSERT INTO `enquirylistingcategory`(`enquiryid`, `typeofenquiry`, `listing`, `category`, `comment`) VALUES ('$enquiryid','$typeofenquiry','$listing','$category','$comment')");
 		
 		if(!$queryenquirylistingcategory)
@@ -82,13 +93,14 @@ class Enquiry_model extends CI_Model
 		$query=$this->db->query($query)->result();
 		return $query;
 	}
-	function viewenquirylistingcategory($id)
+	function viewenquirylistingcategory($email)
 	{
-		$query="SELECT `enquirylistingcategory`.`id`, `enquirylistingcategory`.`enquiryid`, `enquirylistingcategory`.`typeofenquiry`, `enquirylistingcategory`.`listing`, `enquirylistingcategory`.`category`,`enquirylistingcategory`. `comment`, `enquirylistingcategory`.`timestamp` ,`category`.`name` AS `categoryname`,`listing`.`name` AS `listingname`
+		$query="SELECT `enquirylistingcategory`.`id`, `enquirylistingcategory`.`enquiryid`, `enquirylistingcategory`.`typeofenquiry`, `enquirylistingcategory`.`listing`, `enquirylistingcategory`.`category`,`enquirylistingcategory`. `comment`, `enquirylistingcategory`.`timestamp` ,`category`.`name` AS `categoryname`,`listing`.`name` AS `listingname`,`enquiry`.`name`, `enquiry`.`email`, `enquiry`.`phone`, `enquiry`.`timestamp` AS `enquirytimestamp`, `enquiry`.`deletestatus`
         FROM `enquirylistingcategory` 
+        LEFT OUTER JOIN `enquiry` ON `enquirylistingcategory`.`enquiryid`=`enquiry`.`id`
         LEFT OUTER JOIN `listing` ON `enquirylistingcategory`.`listing`=`listing`.`id`
         LEFT OUTER JOIN `category` ON `enquirylistingcategory`.`category`=`category`.`id`
-        WHERE `enquirylistingcategory`.`enquiryid`='$id'";
+        WHERE `enquiry`.`email`='$email'";
 	   
 		$query=$this->db->query($query)->result();
 		return $query;

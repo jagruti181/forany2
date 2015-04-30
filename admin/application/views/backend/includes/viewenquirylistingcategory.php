@@ -1,7 +1,7 @@
 <div class=" row" style="padding:1% 0;">
 	<div class="col-md-11">
 	
-		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createenquirylistingcategory?id=').$this->input->get('id'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
+		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createenquirylistingcategory?id=').$this->input->get('email'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
 	</div>
 	
 </div>
@@ -36,7 +36,7 @@
 						<td><?php echo $row->timestamp;?></td>
 						
 						<td>
-							<a href="<?php echo site_url('site/deleteenquirylistingcategory?id=').$row->enquiryid.'&enquirylistingcategoryid='.$row->id; ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">
+							<a href="<?php echo site_url('site/deleteenquirylistingcategory?id=').$row->enquiryid.'&enquirylistingcategoryid='.$row->id.'&email='.$row->email; ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">
 								<i class="icon-trash "></i>
 							</a> 
 						

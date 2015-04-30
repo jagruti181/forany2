@@ -1,5 +1,5 @@
 <div class=" row" style="padding:1% 0;">
-	<div class="col-md-8">
+	<div class="col-md-10">
 	
 		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createlisting'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
 	</div>
@@ -16,7 +16,7 @@
                 Listing Details
             </header>
 			<div class="drawchintantable">
-                <?php $this->chintantable->createsearch("Listing Details");?>
+                <?php $this->chintantable->createsearch("");?>
                 <table class="table table-striped table-hover" id="" cellpadding="0" cellspacing="0" >
                 <thead>
                     <tr>

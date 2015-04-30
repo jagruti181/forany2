@@ -23,11 +23,13 @@
                         <th data-field="categoryname">Category</th>
 -->
                         <th data-field="email">Email</th>
+<!--
                         <th data-field="phone">Phone</th>
                         <th data-field="timestamp">Timestamp</th>
                         <th data-field="enquiryfrom">From</th>
+-->
                         <th data-field="listingcategory">Listings</th>
-                        <th data-field="action"> Actions </th>
+<!--                        <th data-field="action"> Actions </th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +57,8 @@
                 {
                     resultrow.enquiryfrom="Website";
                 }
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td>" + resultrow.phone + "</td><td>" + resultrow.timestamp + "</td><td>" + resultrow.enquiryfrom + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/viewenquirylistingcategory?id=');?>"+resultrow.id +"'>Show All</a></td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editenquiry?id=');?>"+resultrow.id +"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteenquiry?id='); ?>"+resultrow.id +"'><i class='icon-trash '></i></a></td><tr>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/viewenquirylistingcategory?email=');?>"+resultrow.email +"'>Show All</a></td><tr>";
+//                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/viewenquirylistingcategory?id=');?>"+resultrow.id +"'>Show All</a></td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editenquiry?id=');?>"+resultrow.id +"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deleteenquiry?id='); ?>"+resultrow.id +"'><i class='icon-trash '></i></a></td><tr>";
             }
             generatejquery('<?php echo $base_url;?>');
         </script>

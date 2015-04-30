@@ -1580,7 +1580,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-		$data['table']=$this->enquiry_model->viewenquirylistingcategory($this->input->get('id'));
+		$data['table']=$this->enquiry_model->viewenquirylistingcategory($this->input->get('email'));
 		$data['page']='viewenquirylistingcategory';
 		$data['title']='View All Enquiries';
 		$this->load->view('template',$data);
@@ -1635,24 +1635,24 @@ class Site extends CI_Controller
         $elements[2]->sort="1";
         $elements[2]->header="Email";
         $elements[2]->alias="email";
-        
-        $elements[3]=new stdClass();
-        $elements[3]->field="`enquiry`.`phone`";
-        $elements[3]->sort="1";
-        $elements[3]->header="Phone No";
-        $elements[3]->alias="phone";
-        
-        $elements[4]=new stdClass();
-        $elements[4]->field="`enquiry`.`timestamp`";
-        $elements[4]->sort="1";
-        $elements[4]->header="Timestamp";
-        $elements[4]->alias="timestamp";
-        
-        $elements[5]=new stdClass();
-        $elements[5]->field="`enquiry`.`enquiryfrom`";
-        $elements[5]->sort="1";
-        $elements[5]->header="enquiryfrom";
-        $elements[5]->alias="enquiryfrom";
+//        
+//        $elements[3]=new stdClass();
+//        $elements[3]->field="`enquiry`.`phone`";
+//        $elements[3]->sort="1";
+//        $elements[3]->header="Phone No";
+//        $elements[3]->alias="phone";
+//        
+//        $elements[4]=new stdClass();
+//        $elements[4]->field="`enquiry`.`timestamp`";
+//        $elements[4]->sort="1";
+//        $elements[4]->header="Timestamp";
+//        $elements[4]->alias="timestamp";
+//        
+//        $elements[5]=new stdClass();
+//        $elements[5]->field="`enquiry`.`enquiryfrom`";
+//        $elements[5]->sort="1";
+//        $elements[5]->header="enquiryfrom";
+//        $elements[5]->alias="enquiryfrom";
         
         $search=$this->input->get_post("search");
         $pageno=$this->input->get_post("pageno");
@@ -1670,7 +1670,7 @@ class Site extends CI_Controller
             $orderorder="DESC";
         }
        
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements," FROM `enquiry`");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements," FROM `enquiry`","WHERE 1","GROUP BY `enquiry`.`email`");
         
 		$this->load->view("json",$data);
 	} 
@@ -1745,9 +1745,9 @@ class Site extends CI_Controller
 			$data['alertsuccess']="enquiry Listing created Successfully.";
 			
 //			$data['table']=$this->enquiry_model->viewenquiry();
-			$data['redirect']="site/viewenquirylistingcategory?id=".$enquiryid;
+			$data['redirect']="site/viewenquirylistingcategory?email=".$enquiryid;
 			//$data['other']="template=$template";
-			$this->load->view("redirect",$data);
+			$this->load->view("redirect2",$data);
 		}
 	}
     
@@ -1957,7 +1957,7 @@ class Site extends CI_Controller
 		$access = array("1");
 		$this->checkaccess($access);
 		$this->enquiry_model->deleteenquirylistingcategory($this->input->get('enquirylistingcategoryid'));
-		$data['table']=$this->enquiry_model->viewenquirylistingcategory($this->input->get('id'));
+		$data['table']=$this->enquiry_model->viewenquirylistingcategory($this->input->get('email'));
 		$data['alertsuccess']="Enquiry Listing Deleted Successfully";
 		$data['page']='viewenquirylistingcategory';
 		$data['title']='View Listing or Category Enquiries';
