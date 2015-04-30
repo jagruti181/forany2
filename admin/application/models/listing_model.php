@@ -386,9 +386,9 @@ FROM `listingcategory`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
 WHERE `listingcategory`.`listing`='$id'")->result();
         
-		$query['images']=$this->db->query("SELECT `listingimages`.`listing`, `listingimages`.`image` 
+		$query['images']=$this->db->query("SELECT `listingimages`.`listing`, `listingimages`.`image` , `listingimages`.`order` 
 FROM `listingimages`
-WHERE `listingimages`.`listing`='$id'")->result();
+WHERE `listingimages`.`listing`='$id' ORDER BY `order` ASC")->result();
         
 		$query['modeofpayment']=$this->db->query("SELECT `listingmodeofpayment`.`listing`, `listingmodeofpayment`.`modeofpayment` ,`modeofpayment`.`name` AS `modeofpaymentname`
 FROM `listingmodeofpayment`

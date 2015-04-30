@@ -4,6 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class Category_model extends CI_Model
 {
 	//category
+    
 	public function createcategory($name,$parent,$status,$logo,$image,$typeofimage,$banner,$startdateofbanner,$enddateofbanner)
 	{
 		$data  = array(
