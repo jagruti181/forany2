@@ -31,7 +31,7 @@
                         <div class="btn-mail">
                             <p class="pull-left">
                                 <a class="btn btn-primary mrr" href="">Send SMS</a>
-                                <a class="btn btn-primary mrr" href="">Send Email</a>
+                                <a class="btn btn-primary mrr" ng-click="sendemail(detail.listing.listingid)">Send Email</a>
                                 <a class="btn btn-primary mrr" href="">Other Posts</a>
                             </p>
                         </div>
@@ -99,15 +99,16 @@
                             <p class="detail-add">{{detail.listing.address}}</p>
                         </div>
                         <p class="fapadl" ng-if="detail.listing.contactno"><i class="fa fa-mobile fapadr"></i>&nbsp;{{detail.listing.contactno}}</p>
-                        
-                        area :{{detail.listing.area}}<br>
-                        pincode : {{detail.listing.pincode}}<br>
-                        city :{{detail.listing.city}}<br>
-                        state :{{detail.listing.state}}<bt>
-                        country : {{detail.listing.country}}<br>
-                        contact no: {{detail.listing.contactno}}<br>
-                        email :{{detail.listing.email}}<br>
-                        websitr:{{detail.listing.website}}
+                        <ul class="can-detials">
+                            <li>area :{{detail.listing.area}}</li>
+                        <li> pincode : {{detail.listing.pincode}}<br>
+                            <li>city :{{detail.listing.city}}</li>
+                            <li>state :{{detail.listing.state}}</li>
+                             <li>country : {{detail.listing.country}}</li>
+                             <li>contact no: {{detail.listing.contactno}}</li>
+                             <li>email :{{detail.listing.email}}</li>
+                             <li>websitr:{{detail.listing.website}}</li>
+                            </ul>
                         
                     </div>
                     <div class="more-text">
