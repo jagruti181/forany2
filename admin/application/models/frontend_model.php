@@ -92,6 +92,7 @@ class Frontend_model extends CI_Model
             'type' => $type,
             'credits' => $credits,
             'video' => $video,
+            'status' => 0,
             'logo' => $logo
 		);
 		$query=$this->db->insert( 'listing', $data );

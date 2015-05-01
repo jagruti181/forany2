@@ -1147,6 +1147,7 @@ class Site extends CI_Controller
 //		$data[ 'type' ] =$this->frontend_model->type();
 		$data[ 'type' ] =$this->listing_model->gettypedropdown();
 		$data[ 'isverified' ] =$this->listing_model->getisverifieddropdown();
+		$data[ 'status' ] =$this->listing_model->getstatusdropdown();
 		$data[ 'user' ] =$this->listing_model->getuserdropdown();
         $data[ 'city' ] =$this->city_model->getcitydropdown();
         
@@ -1211,6 +1212,7 @@ class Site extends CI_Controller
             $data[ 'user' ] =$this->listing_model->getuserdropdown();
             $data[ 'city' ] =$this->city_model->getcitydropdown();
             $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
+            $data[ 'status' ] =$this->listing_model->getstatusdropdown();
             $data[ 'modeofpayment' ] =$this->modeofpayment_model->getmodeofpaymentforlistingdropdown();
             $data[ 'daysofoperation' ] =$this->modeofpayment_model->getdaysofoperationforlistingdropdown();
             $data[ 'page' ] = 'createlisting';
@@ -1245,6 +1247,7 @@ class Site extends CI_Controller
 			$pointer=$this->input->post('pointer');
 			$area=$this->input->post('area');
 			$mobile=$this->input->post('mobile');
+			$status=$this->input->post('status');
             
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
@@ -1285,7 +1288,7 @@ class Site extends CI_Controller
                 
 			}
             
-			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)==0)
+			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)==0)
 			$data['alerterror']="New listing could not be created.";
 			else
 			$data['alertsuccess']="listing created Successfully.";
@@ -1305,6 +1308,7 @@ class Site extends CI_Controller
         $data[ 'isverified' ] =$this->listing_model->getisverifieddropdown();
         $data[ 'user' ] =$this->listing_model->getuserdropdown();
         $data[ 'city' ] =$this->city_model->getcitydropdown();
+		$data[ 'status' ] =$this->listing_model->getstatusdropdown();
 		$data['before']=$this->listing_model->beforeedit($this->input->get('id'));
 //        $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
         
@@ -1365,6 +1369,7 @@ class Site extends CI_Controller
             $data[ 'city' ] =$this->city_model->getcitydropdown();
             $data['before']=$this->listing_model->beforeedit($this->input->get('id'));
             $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
+            $data[ 'status' ] =$this->listing_model->getstatusdropdown();
             $data[ 'selectedcategory' ] =$this->category_model->getselectedcategoryforlistingdropdown($this->input->get('id'));
             $data[ 'modeofpayment' ] =$this->modeofpayment_model->getmodeofpaymentforlistingdropdown();
             $data[ 'selectedmodeofpayment' ] =$this->modeofpayment_model->getselectedmodeofpaymentforlistingdropdown($this->input->get('id'));
@@ -1403,6 +1408,7 @@ class Site extends CI_Controller
 			$pointer=$this->input->post('pointer');
 			$area=$this->input->post('area');
 			$mobile=$this->input->post('mobile');
+			$status=$this->input->post('status');
             
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
@@ -1448,7 +1454,7 @@ class Site extends CI_Controller
                 $logo=$logo->logo;
             }
             
-			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)==0)
+			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)==0)
 			$data['alerterror']="listing Editing was unsuccesful";
 			else
 			$data['alertsuccess']="listing edited Successfully.";

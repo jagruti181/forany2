@@ -4,7 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class Listing_model extends CI_Model
 {
 	
-	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)
+	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)
 	{
 		$data  = array(
 			'name' => $name,
@@ -33,6 +33,7 @@ class Listing_model extends CI_Model
             'pointer' => $pointer,
             'area' => $area,
             'mobile' => $mobile,
+            'status' => $status,
             'logo' => $logo
 		);
 		$query=$this->db->insert( 'listing', $data );
@@ -180,7 +181,7 @@ class Listing_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile)
+	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)
 	{
 		$data  = array(
 			'name' => $name,
@@ -209,6 +210,7 @@ class Listing_model extends CI_Model
             'pointer' => $pointer,
             'area' => $area,
             'mobile' => $mobile,
+            'status' => $status,
             'logo' => $logo
 		);
 		
@@ -372,7 +374,7 @@ class Listing_model extends CI_Model
 FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `listingcategory`.`category`=`category`.`id`
-WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1")->result();
+WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1 AND `listing`.`status`=1")->result();
 		return $query;
 	}
 	public function getonelistingbyid($id)
@@ -407,7 +409,7 @@ WHERE `listingdaysofoperation`.`listing`='$id'")->result();
 	{
 		$query=$this->db->query("SELECT `listing`.`name`,`listing`.`id` AS `listingid`, `listing`. `user`, `listing`.`lat`, `listing`.`long`, `listing`.`address`, `listing`.`city`, `listing`.`pincode`, `listing`.`state`, `listing`.`country`, `listing`.`description`, `listing`.`logo`, `listing`.`contactno`, `listing`.`email`, `listing`.`website`, `listing`.`facebook`, `listing`.`twitter`, `listing`.`googleplus`, `listing`.`yearofestablishment`, `listing`.`timeofoperation_start`, `listing`.`timeofoperation_end`, `listing`.`type`, `listing`.`credits`, `listing`.`isverified`, `listing`.`video` , `listing`.`area`
 FROM `listing`
-WHERE `listing`.`city`='$cityid'")->result();
+WHERE `listing`.`city`='$cityid' AND `listing`.`status`=1")->result();
 		return $query;
 	}
     

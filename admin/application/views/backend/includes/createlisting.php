@@ -258,6 +258,16 @@
 				</div>
 				
 				<div class=" form-group">
+				  <label class="col-sm-2 control-label">status</label>
+				  <div class="col-sm-4">
+					<?php
+						
+						echo form_dropdown('status',$status,set_value('status'),'class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
+					?>
+				  </div>
+				</div>
+				
+				<div class=" form-group">
 				  <label class="col-sm-2 control-label">&nbsp;</label>
 				  <div class="col-sm-4">
 				  <button type="submit" class="btn btn-primary">Save</button>

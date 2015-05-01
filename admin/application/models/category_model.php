@@ -382,7 +382,7 @@ FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
 LEFT OUTER JOIN `city` ON `city`.`id`=`listing`.`city`
-WHERE ( `category`.`name` LIKE '$category%' OR `listing`.`name` LIKE '$category%' ) AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`area` LIKE '%$area%'
+WHERE ( `category`.`name` LIKE '$category%' OR `listing`.`name` LIKE '$category%' ) AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 AND `listing`.`area` LIKE '%$area%'
 ORDER BY `dist` ASC
         LIMIT 0 , 10")->result();
 		
