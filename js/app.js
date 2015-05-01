@@ -1,4 +1,5 @@
-var assetspath = "http://localhost/forany2/admin/assets/";
+//var assetspath = "http://localhost/forany2/admin/assets/";
+var assetspath = "http://www.foranyinformation.com/admin/assets/";
 
 // JavaScript Document
 var firstapp = angular.module('firstapp', [

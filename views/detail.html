@@ -93,12 +93,22 @@
                             <h2 class="title">More Information</h2>
                         </div>
 
-                        <div  class="fapadl"><i class="fa fa-info-circle fapadr mk-id"></i>
+                        <div  class="fapadl" ng-if="detail.listing.description"><i class="fa fa-info-circle fapadr mk-id"></i>
                         <p class="detail-add">{{detail.listing.description}}</p></div>
-                        <div class="fapadl"><i class="fa fa-location-arrow fapadr mk-id"></i>
+                        <div class="fapadl" ng-if="detail.listing.address"><i class="fa fa-location-arrow fapadr mk-id"></i>
                             <p class="detail-add">{{detail.listing.address}}</p>
                         </div>
-                        <p class="fapadl"><i class="fa fa-mobile fapadr"></i>&nbsp;{{detail.listing.contactno}}</p>
+                        <p class="fapadl" ng-if="detail.listing.contactno"><i class="fa fa-mobile fapadr"></i>&nbsp;{{detail.listing.contactno}}</p>
+                        
+                        area :{{detail.listing.area}}<br>
+                        pincode : {{detail.listing.pincode}}<br>
+                        city :{{detail.listing.city}}<br>
+                        state :{{detail.listing.state}}<bt>
+                        country : {{detail.listing.country}}<br>
+                        contact no: {{detail.listing.contactno}}<br>
+                        email :{{detail.listing.email}}<br>
+                        websitr:{{detail.listing.website}}
+                        
                     </div>
                     <div class="more-text">
                         <div class="fortitle text-center">
@@ -106,13 +116,13 @@
                         </div>
                         <p class="fapadl" ng-repeat="category in detail.categories"><i class="fa fa-angle-double-right fapadr"></i>&nbsp;{{category.categoryname}}</p>
                     </div>
-                    <div class="more-text">
+                    <div class="more-text" ng-if="detail.daysofoperation!='' || detail.listing.timeofoperation_start!=''">
 
                         <div class="fortitle text-center">
                             <h2 class="title">Hours Of Operation</h2>
                         </div>
                         <div class="fapd">
-                            <i class="fa fa-calendar"></i> <strong class="fapadl mhs" ng-repeat="operation in detail.daysofoperation">{{operation.daysofoperationname}}&nbsp;&nbsp;</strong>
+                            <i class="fa fa-calendar" ng-if="detail.daysofoperation"></i> <strong class="fapadl mhs" ng-repeat="operation in detail.daysofoperation">{{operation.daysofoperationname}}&nbsp;&nbsp;</strong>
                             <br>
                             <br>
 
@@ -148,6 +158,7 @@
                 <div class="col-md-4">
                     <div class="facebook-deatils">
                         <div class="fb-like-box" data-href="https://www.facebook.com/{{detail.listing.facebook}}" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>
+<!--                        <div class="fb-like-box" data-href="https://www.facebook.com/wepick181" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="true"></div>-->
                     </div>
                     <script>
                         (function (d, s, id) {
