@@ -542,18 +542,25 @@ phonecatControllers.controller('detail',
         $scope.enquiry = [];
         $scope.recentvisit = [];
 
+        $scope.user=RestService.getjuser();
 
+         //        start send email to user
 
+        var sendsuccess = function(data, status) {
+            console.log(data);
+            toaster.pop('success', "Email", "Email Send successfuly", 5000);
+        };
+        $scope.sendemail = function(listing) {
+                RestService.sendemail($scope.user.id, listing).success(sendsuccess);
 
+        }
 
-
-
-
+        //        end send email to user
+z 
+    
         $scope.$on('$viewContentLoaded', function() {
-
-            setTimeout(function() {
-                FB.XFBML.parse();
-            }, 1000);
+            
+            setTimeout(function(){ FB.XFBML.parse();}, 1000);
             //Here your view content is fully loaded !!
         });
 
@@ -601,6 +608,7 @@ phonecatControllers.controller('detail',
         // Get recent visit
         console.log("my recent visit");
         console.log(RestService.getrecentvisit());
+
 
         //get detail listing
         var getdetail = function(data, status) {
@@ -669,21 +677,6 @@ phonecatControllers.controller('detail',
 
 
         }
-
-        //        start send email to user
-
-        var sendsuccess = function(data, status) {
-            console.log(data);
-            toaster.pop('success', "Email", "Email Send successfuly", 5000);
-        };
-        $scope.sendemail = function(listing) {
-            console.log($scope.user);
-            pat = $location.url();
-                RestService.sendemail($scope.user, listing).success(sendsuccess);
-        }
-
-        //        end send email to user
-
 
     });
 
