@@ -2711,8 +2711,27 @@ p.detail-add {
     float: left;
     padding-left: 4px;
 }
+ul.can-detials {
+    -webkit-column-count: 2;
+    /* Chrome, Safari, Opera */
+    
+    -moz-column-count: 2;
+    /* Firefox */
+    
+    column-count: 2;
+}
+ul.can-detials li {
+    padding: 5px 25px;
+    text-transform: capitalize;
+}
 .more-text i.mk-id {
-  width: 6%;
-  float: left;
-  padding-left: 20px;
+    width: 6%;
+    float: left;
+    padding-left: 20px;
+}
+ul.can-detials li span {
+    font-weight: 500;
+}
+li.email-details {
+  text-transform: none!important;
 }
