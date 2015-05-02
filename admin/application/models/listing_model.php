@@ -541,5 +541,19 @@ WHERE `listingcategory`.`category`='$id' ";
 			return  1;
 	}
     
+    function deletealllistings($id)
+    {
+        
+        foreach($id as $idu)
+        {
+            $query=$this->db->query("UPDATE `listing` SET `deletestatus`=0 WHERE `id`='$idu'");
+        }
+        if($query){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
 }
 ?>

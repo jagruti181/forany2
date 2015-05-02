@@ -3691,5 +3691,16 @@ class Site extends CI_Controller
 //		$this->load->view("json",$data);
 //	} 
     
+	function deletealllistings()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        //print_r($this->input->post('ids'));
+		$data['table']=$this->listing_model->deletealllistings($this->input->post('ids'));
+		$data['alertsuccess']="Listing Deleted Successfully";
+		$data['page']='viewlisting';
+		$data['title']='View Listing';
+		//$this->load->view('template',$data);
+	}
 }
 ?>
