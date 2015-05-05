@@ -219,7 +219,7 @@ class City_model extends CI_Model
 		
 		return $return;
 	}
-    public function getlocationdropdown()
+    public function getareadropdown()
 	{
 		$query=$this->db->query("SELECT * FROM `location`  ORDER BY `id` ASC")->result();
 		$return=array(
@@ -232,6 +232,14 @@ class City_model extends CI_Model
 		
 		return $return;
 	}
+    
+    
+        function getareabycity($cityid)
+        {
+        	$query=$this->db->query("SELECT * FROM `location` WHERE `cityid`='$cityid'")->result();
+		return $query;
+        }
+        
     //-----------------Changes made avinash
     
     

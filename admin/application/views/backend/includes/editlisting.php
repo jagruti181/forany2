@@ -55,6 +55,7 @@
 				  </div>
 				</div>
 				
+<!--
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label">city</label>
 				  <div class="col-sm-8">
@@ -64,11 +65,34 @@
 					?>
 				  </div>
 				</div>
+-->
 				
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Area</label>
+				<div class=" form-group">
+				  <label class="col-sm-2 control-label">City</label>
+				  <div class="col-sm-4">
+					<?php 	 echo form_dropdown('city',$city,set_value('city',$before->city),'id="cityid" class="chzn-select form-control" 	data-placeholder="Choose a City..."  onchange="changearea()"');
+					?>
+				  </div>
+				</div>
+				
+				<div class="form-group" id="onareaselect">
+						<label class="col-sm-2 control-label">Area</label>
+						<div class="col-sm-4 areaselect">
+						
+					<?php 	 echo form_dropdown('area',$area,set_value('area',$before->area),'id="areaid" class="chzn-select form-control" 	data-placeholder="Choose a area..."');
+					?>
+<!--
+                       <select name="area" class="chzn-select form-control">
+						   
+						   </select>
+-->
+						</div>
+				</div>
+            
+				<div class="form-group" style="display:none;">
+					<label class="col-sm-2 control-label">Areaold</label>
 					<div class="col-sm-8">
-					  <input type="text" id="area" name="area" class="form-control" value="<?php echo set_value('area',$before->area); ?>">
+					  <input type="text" id="areaold" name="areaold" class="form-control" value="<?php echo set_value('areaold',$before->area); ?>">
 					</div>
 				</div>
 				<div class=" form-group">
@@ -313,4 +337,35 @@
         );
 //        return false;
     });
+    
+    
+    function changearea() {
+        console.log($('#cityid').val());
+        $.getJSON(
+            "<?php echo base_url(); ?>index.php/site/getareadropdown/" + $('#cityid').val(), {
+                id: "123"
+            },
+            function (data) {
+                console.log(data);
+                nodata=data;
+                changeareadropdown(data);
+
+            }
+
+        );
+    }
+                  var mallbycity=$(".storesforuser1 select").select2({allowClear: true,width:343});
+                  
+    function changeareadropdown(data) {
+        $(".areaselect select").html("");
+        for(var i=0;i<data.length;i++)
+        {
+//            console.log(data[i].id);
+            $(".areaselect select").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");
+            
+        }
+        
+
+    };
+    
 </script>

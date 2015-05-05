@@ -129,7 +129,7 @@ class Chintantable {
                 <div class="col-md-3">
                 <select class="maxrow form-control" style="
     float: left;  width: 76px;
-"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select>
+"><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="500">500</option><option value="1000">1000</option></select>
                     <div class="input-group">
                         <input type="text" class="form-control chintantablesearch" placeholder="Search">
                         <span class="input-group-btn">

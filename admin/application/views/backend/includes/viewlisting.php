@@ -1,10 +1,23 @@
 <div class=" row" style="padding:1% 0;">
-	<div class="col-md-10">
+
+	<div class="col-md-6">
+	<?php
+        $userid=$this->session->userdata('id');
+        $accesslevel=$this->session->userdata('accesslevel');
+        if($userid==1 && $accesslevel==1)
+        {
+        ?>
+		<a class="btn btn-danger"  href="<?php echo site_url('site/tejasdelete'); ?>"><i class="icon-upload" onclick="return confirm('Are you sure you want to delete?')"></i>DELETE ALL LISTING</a> &nbsp; 
+		<?php
+        }
+        ?>
+	</div>
+	<div class="col-md-3">
 	
 		<a class="btn btn-primary pull-right"  href="<?php echo site_url('site/createlisting'); ?>"><i class="icon-plus"></i>Create </a> &nbsp; 
 	</div>
 	
-	<div class="col-md-2">
+	<div class="col-md-3">
 	
 		<a class="btn btn-primary"  href="<?php echo site_url('site/uploadlistingcsv'); ?>"><i class="icon-upload" onclick="return confirm('Are you sure you want to delete?')"></i>Upload Listing</a> &nbsp; 
 	</div>

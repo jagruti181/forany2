@@ -1308,6 +1308,7 @@ class Site extends CI_Controller
         $data[ 'isverified' ] =$this->listing_model->getisverifieddropdown();
         $data[ 'user' ] =$this->listing_model->getuserdropdown();
         $data[ 'city' ] =$this->city_model->getcitydropdown();
+        $data[ 'area' ] =$this->city_model->getareadropdown();
 		$data[ 'status' ] =$this->listing_model->getstatusdropdown();
 		$data['before']=$this->listing_model->beforeedit($this->input->get('id'));
 //        $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
@@ -1370,6 +1371,7 @@ class Site extends CI_Controller
             $data['before']=$this->listing_model->beforeedit($this->input->get('id'));
             $data[ 'category' ] =$this->category_model->getcategoryforlistingdropdown();
             $data[ 'status' ] =$this->listing_model->getstatusdropdown();
+            $data[ 'area' ] =$this->city_model->getareadropdown();
             $data[ 'selectedcategory' ] =$this->category_model->getselectedcategoryforlistingdropdown($this->input->get('id'));
             $data[ 'modeofpayment' ] =$this->modeofpayment_model->getmodeofpaymentforlistingdropdown();
             $data[ 'selectedmodeofpayment' ] =$this->modeofpayment_model->getselectedmodeofpaymentforlistingdropdown($this->input->get('id'));
@@ -3702,5 +3704,41 @@ class Site extends CI_Controller
 		$data['title']='View Listing';
 		//$this->load->view('template',$data);
 	}
+	function tejasdelete()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+        //print_r($this->input->post('ids'));
+        $userid=$this->session->userdata('id');
+        $accesslevel=$this->session->userdata('accesslevel');
+        if($userid==1 && $accesslevel==1)
+        {
+            $data['table']=$this->listing_model->tejasdelete();
+            $data['alertsuccess']="Listing Deleted Successfully";
+            $data['page']='viewlisting';
+            $data['title']='View Listing';
+        }
+        else
+        {
+            $data['alertsuccess']="You Do Not Have Access To Delete Listings";
+            $data['page']='viewlisting';
+            $data['title']='View Listing';
+        }
+		//$this->load->view('template',$data);
+	}
+    
+    
+    public function getareadropdown($id) {
+        $data1 = $this->listing_model->getareadropdown($id);
+        $data["message"] = $data1;
+        $this->load->view("json", $data);
+    }
+    
+    public function getareabycity()
+    {
+        $city=$this->input->get_post('city');
+        $data['message']=$this->city_model->getareabycity($city);
+        $this->load->view('json',$data);
+    }
 }
 ?>

@@ -555,5 +555,19 @@ WHERE `listingcategory`.`category`='$id' ";
         }
     }
     
+    function tejasdelete($id)
+    {
+//            $query=$this->db->query("UPDATE `listing` SET `deletestatus`=0 ");
+        $query=$this->db->query("DELETE FROM `listing`");
+        return 1;
+        
+    }
+    
+    public function getareadropdown($city) {
+        $query = "SELECT * FROM `location` WHERE `cityid`='$city' ORDER BY `id` ASC";
+        $area = $this->db->query($query)->result();
+        return $area;
+    }
+    
 }
 ?>
