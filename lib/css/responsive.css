@@ -285,6 +285,13 @@ ul.sub-menu{
 	text-align: center;
 }
 
+.shop-menu ul{
+    text-align: center!important;
+}
+
+.searchform input{
+        width:260px!important;
+    }    
 .contactinfo ul li a {
 	padding-right: 15px;
 	padding-left: 0;
