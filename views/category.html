@@ -59,13 +59,14 @@
 						        </ul>
 						    </div> -->
                         <div class="category">
-                            <div class="media commnets" ng-repeat="list in listings">
-                                <a class="pull-left" ng-click="linkclick(list.listing)">
-                                    <img class="media-object mediumimage" src="{{list.logo|imagepath}}" alt="">
-                                </a>
-                                <div class="media-body">
-                                    <h4 class="media-heading onlycursor" ng-click="linkclick(list.listing)"><i class="fa fa-bookmark"></i><span>{{list.name}}</span></h4>
-                                    <p><i class="fa fa-location-arrow"></i><span class="med1">{{list.address | cut:true:50:' ...'}}</p>
+                            <div class="col-xs-8">
+                                <div class="media commnets" ng-repeat="list in listings">
+                                    <a class="pull-left" ng-click="linkclick(list.listing)">
+                                        <img class="media-object mediumimage" src="{{list.logo|imagepath}}" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading onlycursor" ng-click="linkclick(list.listing)"><i class="fa fa-bookmark"></i><span>{{list.name}}</span></h4>
+                                        <p><i class="fa fa-location-arrow"></i><span class="med1">{{list.address | cut:true:50:' ...'}}</p>
                             <p><i class="fa fa-mobile"></i><span class="med2">{{list.contactno}}</p>
 							<div class="social-icons pull-laft">
 							<div class="cat-btn" style="margin: -9px auto;">
@@ -73,7 +74,7 @@
                                 <a class="btn btn-primary mrr" href="">Send SMS</a>
                                 <a class="btn btn-primary mrr" ng-click="sendemail(list.listing)">Send Email</a>
                                 <a class="btn btn-primary mrr enq " ng-click="onemailclick(list.listing);" style="position: absolute;
-left: 387px;">Enquiry</a>
+left: 454px;">Enquiry</a>
                                 
 
 <!--                                <a class="btn btn-primary mrr" href="">Other Posts</a>-->
@@ -83,10 +84,7 @@ left: 387px;">Enquiry</a>
 
                             
   
-                            <h3>Rating</h3>
-
-                            <div class="star-rating" star-rating rating-value="rating" data-max="5" on-rating-selected="rateFunction(rating)">
-                            </div>
+                          
 
 <!--
                             <div class="img-cat" ng-if="list.type==1">
@@ -96,15 +94,24 @@ left: 387px;">Enquiry</a>
 <!--
                         <div class="cate-social">	
 							<span class='st_facebook_hcount' displayText='Facebook' style="height:0px"></span>
-                                        <span class='st_twitter_hcount' displayText='Tweet'></span>
-                                        <span class='st_linkedin_hcount' displayText='LinkedIn'></span>
-                                        <span class='st_googleplus_hcount' displayText='Google +'></span>
+                                            <span class='st_twitter_hcount' displayText='Tweet'></span>
+                                            <span class='st_linkedin_hcount' displayText='LinkedIn'></span>
+                                            <span class='st_googleplus_hcount' displayText='Google +'></span>
+                                    </div>
+                                    -->
                                 </div>
-                                -->
                             </div>
                         </div>
+                        <!--Comments-->
                     </div>
-                    <!--Comments-->
+                    <div class="col-xs-4">
+                       <div style="padding-top:35px;">
+                        <h3>Rating</h3>
+
+                        <div class="star-rating" star-rating rating-value="rating" data-max="5" on-rating-selected="rateFunction(rating)">
+                        </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,7 +120,7 @@ left: 387px;">Enquiry</a>
 
 
 <script>
-    $(".panel-title").click(function() {
+    $(".panel-title").click(function () {
         console.log("im in");
     });
 </script>

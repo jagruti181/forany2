@@ -2736,13 +2736,7 @@ ul.can-detials li span {
 li.email-details {
   text-transform: none!important;
 }
-
-
-
-
-
-
-        .rating{
+.rating{
   color: #a9a9a9;
   margin: 0;
   padding: 0;
@@ -2759,9 +2753,11 @@ ul.rating {
   text-align: center;
   font-weight: bold;
   cursor: pointer;
+    font-size: 20px;
+    
 }
 
 .rating .filled {
-  color: #21568b;
+  color: #049fb3!important;
 }
 
