@@ -392,7 +392,8 @@ LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
 LEFT OUTER JOIN `city` ON `city`.`id`=`listing`.`city`
 LEFT OUTER JOIN `location` ON `location`.`id`=`listing`.`area`
-WHERE `fullname` LIKE '%$category%' AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 $areawhere
+WHERE `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 $areawhere
+HAVING `fullname` LIKE '%$category%'
 ORDER BY `dist` ASC
         LIMIT 0 , 10")->result();
 		
