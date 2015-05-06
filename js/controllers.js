@@ -142,7 +142,8 @@ phonecatControllers.controller('home',
                         //                        cityis.selected = data[i].long_name;
                         area = data[i].long_name;
                         $scope.area1 = data[i].long_name;
-                        $scope.area = data[i].long_name;
+                        $scope.form.area = data[i].long_name;
+                        console.log($scope.form.area);
 
                     }
                 }
@@ -185,13 +186,21 @@ phonecatControllers.controller('home',
             console.log(data);
             $scope.areas = data;
             //            $scope.form.area = data[0].id;
-            $scope.form.area = 0;
+//            for
+            $scope.form.area = "";
         };
 
         $scope.citychange = function(city) {
+            console.log("in change city");
             console.log(city);
             RestService.viewonecitylocations(city).success(getlocation);
         };
+    
+        $scope.areachange = function (area){
+            console.log("area clicked ");
+            console.log(area);
+        };
+    
         $scope.totextbox = function(name, id) {
             $("input[name=abc]").val(name);
             $scope.searchid = id;
@@ -222,7 +231,7 @@ phonecatControllers.controller('home',
 
             }
         };
-        $scope.searchlist = function(text, city) {
+        $scope.searchlist = function(text, city, area) {
             //            if (!city)
             //                city = 0;
 
@@ -232,14 +241,14 @@ phonecatControllers.controller('home',
             $scope.searchtext = text[0];
             if (!text[1]) {
                 $scope.area = $scope.area;
-                $scope.areatosend = '';
+                $scope.areatosend = area;
             } else {
                 $scope.area = text[1];
                 $scope.areatosend = text[1];
             }
 
             if (text[0] != "") {
-
+                console.log($scope.areatosend);
                 RestService.searchcategory($scope.searchtext, city, $scope.areatosend, lat, long).success(searchsuccess);
             } else {
                 $scope.searchshow = false;
@@ -556,7 +565,7 @@ phonecatControllers.controller('detail',
         }
 
         //        end send email to user
-z 
+
     
         $scope.$on('$viewContentLoaded', function() {
             
@@ -638,6 +647,7 @@ z
             if (data == "1") {
                 //                $scope.enquiryshow = true;
                 //                $scope.enquirymsg = "Enquiry Send successfuly";
+                window.location.reload();
                 toaster.pop('success', "Enquiry", "Enquiry Send successfuly", 5000);
 
             } else {
@@ -670,6 +680,7 @@ z
             var check = formvalidation($scope.allvalidation);
 
             if (check == '') {
+                console.log($scope.allvalidation);
                 RestService.enquiryuser(enquiry.name, $scope.detail.listing.listingid, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
             } else {
                 toaster.pop('error', "Enquiry", "Enter Proper " + check, 5000);
@@ -767,6 +778,7 @@ phonecatControllers.controller('profile',
         $scope.profile = [];
         $scope.alertmsg = "alert-danger";
         $scope.profilemsg = '';
+        $scope.visiblefield = "true";
 
         // user authentication
 
@@ -784,15 +796,10 @@ phonecatControllers.controller('profile',
 
         }
 
-        //        var getuser = function (data, status) {
-        //                    console.log("my data");
-        //                    console.log(data);
-        //            $scope.user = data;
-        //            RestService.getuser(data).success(usersuccess);
-        //        }
-        //        RestService.authenticate().success(getuser);
-
-        // get user profile stored data
+        $scope.editprofile = function () {
+            console.log("edit clicked");
+            $scope.visiblefield = "false";
+        }
 
         $scope.signupmsg = "";
 
@@ -800,6 +807,7 @@ phonecatControllers.controller('profile',
 
             console.log(data);
             if (data == "1") {
+                $scope.visiblefield = "false";
                 $scope.profilemsg = "Profile Updated";
                 $scope.alertmsg = "alert-success";
             }
@@ -825,7 +833,7 @@ phonecatControllers.controller('profile',
 
             var check = formvalidation($scope.allvalidation1);
 
-            if (check == '') {
+            if (check == '') { 
                 console.log("yahooo...checked");
                 RestService.saveprofile(profile).success(profilesuccess);
 
@@ -1306,12 +1314,22 @@ phonecatControllers.controller('listbusiness',
             $scope.list.longitude = data.results[0].geometry.location.lng;
 
         };
+    
+        $scope.allarea = [];
+        var getlocation = function (data, status) {
+            $scope.allarea = data;
+//            $scope.list.area = data[0].id + "," + data[0].name
+        };
+    
         $scope.getlatlong = function(address, area, pin, city, state, country) {
             if (!address) {
                 address = "";
             }
             if (!area) {
                 area = "";
+            }else {
+                $scope.area = area.split(",");
+                area = $scope.area['1'];
             }
             if (!pin) {
                 pin = "";
@@ -1324,7 +1342,39 @@ phonecatControllers.controller('listbusiness',
             }
             if (!state) {
                 state = "";
+            } 
+            if (!country) {
+                country = "";
             }
+
+            $scope.lmap = address + "," + area + "," + pin + "," + city + "," + state + "," + country;
+            console.log($scope.lmap);
+            RestService.getmap($scope.lmap).success(mapp);
+        };
+    
+        $scope.getlatlongcity = function(address, area, pin, city, state, country) {
+            if (!address) {
+                address = "";
+            }
+            if (!area) {
+                area = "";
+            }else {
+                $scope.area = area.split(",");
+                area = $scope.area['1'];
+            }
+            if (!pin) {
+                pin = "";
+            }
+            if (!city) {
+                city = "";
+            } else {
+                $scope.city = city.split(",");
+                city = $scope.city['1'];
+                RestService.viewonecitylocations($scope.city['0']).success(getlocation);
+            }
+            if (!state) {
+                state = "";
+            } 
             if (!country) {
                 country = "";
             }
@@ -1411,6 +1461,8 @@ phonecatControllers.controller('listbusiness',
                 //                list.logo = "default.jpg";
                 list.city = list.city.split(",");
                 list.city = list.city['0'];
+                list.area = list.area.split(",");
+                list.area = list.area['0'];
                 console.log(list);
                 RestService.createlisting(list).success(listingsuccess);
             } else {

@@ -90,16 +90,21 @@
                         <h5>Address *</h5>
                         <textarea ng-model="list.address" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" placeholder="Address" class="formselop form-control" ng-class="allvalidation[4].validation" required></textarea>
 
-                        <h5>Area *</h5>
-                        <input type="text" ng-model="list.area" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" placeholder="Area" class="form-control" ng-class="allvalidation[5].validation" required />
+                        
 
                         <h5>Pincode *</h5>
                         <input type="number" ng-model="list.pincode" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" placeholder="Pincode" class="form-control" ng-class="allvalidation[6].validation" required />
 
                         <h5>City *</h5>
-                        <select ng-model="list.city" class="formselop form-control" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" ng-class="allvalidation[7].validation" required>
+                        <select ng-model="list.city" class="formselop form-control" ng-change="getlatlongcity(list.address,list.area,list.pincode,list.city,list.state,list.country)" ng-class="allvalidation[7].validation" required>
                             <option ng-repeat="city in alljson.city" value="{{city.id}},{{city.name}}">{{city.name}}</option>
                         </select>
+                        
+                        <h5>Area *</h5>
+                        <select ng-model="list.area" class="formselop form-control" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" ng-class="allvalidation[5].validation" required>
+                            <option ng-repeat="area in allarea" value="{{area.id}},{{area.name}}">{{area.name}}</option>
+                        </select>
+<!--                        <input type="text" ng-model="list.area" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" placeholder="Area" class="form-control" ng-class="allvalidation[5].validation" required />-->
 
                         <h5>State *</h5>
                         <input type="text" ng-model="list.state" ng-change="getlatlong(list.address,list.area,list.pincode,list.city,list.state,list.country)" placeholder="State" class="form-control" ng-class="allvalidation[8].validation" required />

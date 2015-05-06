@@ -222,6 +222,22 @@ var addcategory = function (data) {
     console.log(cat);
 }
 
+firstapp.directive("visiblediv", function(){
+    return function (scope, element, attrs) {
+        element.text(attrs.message);
+//        if(attrs.message=="transcript"){
+//            element.template("<div class='activity-desk'><div class='panel'><div class='panel-body'><div class='{{comment.name|chatclass}}'></div><i class='fa fa-clock-o'></i><h4>{{comment.timestamp|converttime}}</h4><p>{{comment.text}}</p></div></div></div>");
+//        }
+    }
+})
+firstapp.directive("chatdir2", function(){
+    return function (scope, element, attrs) {
+//        element.text(attrs.message);
+        if(attrs.message=="transcript"){
+            element.template("<div class='activity-desk'><div class='panel'><div class='panel-body'><div class='{{comment.name|chatclass}}'></div><i class='fa fa-clock-o'></i><h4>{{comment.timestamp|converttime}}</h4><p>{{comment.text}}</p></div></div></div>");
+        }
+    }
+})
 firstapp.directive("treeModel", function ($compile) {
     return {
         restrict: "A",

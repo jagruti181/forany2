@@ -11,23 +11,27 @@
                             {{profilemsg}}
                         </div>
 
-                        <input type="text" ng-model="profile.firstname" class="form-control" ng-class="allvalidation[0].validation" required placeholder="First Name" />
-                        <input type="text" ng-model="profile.lastname" class="form-control" ng-class="allvalidation[1].validation" required placeholder="Last Name" />
-                        <input type="email" ng-model="profile.email" class="form-control" ng-class="allvalidation[2].validation" required placeholder="Email Address *" />
-                        <input type="text" ng-model="profile.contact" class="form-control" placeholder="Contact" />
-                        <input type="text" ng-model="profile.phoneno" class="form-control" placeholder="Phone Number" />
-                        <input ng-model="profile.dob" class="form-control" placeholder="Date Of Birth"  placeholder="Birthday" onfocus="(this.type='date')" onblur="(this.type='text')"/>
-                        <input type="text" ng-model="profile.website" class="form-control" placeholder="Website" />
+                        <input type="text" ng-model="profile.firstname" class="form-control" ng-class="allvalidation[0].validation" required placeholder="First Name" ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.lastname" class="form-control" ng-class="allvalidation[1].validation" required placeholder="Last Name"  ng-disabled="visiblefield">
+                        <input type="email" ng-model="profile.email" class="form-control" ng-class="allvalidation[2].validation" required placeholder="Email Address *"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.contact" class="form-control" placeholder="Contact"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.phoneno" class="form-control" placeholder="Phone Number"  ng-disabled="visiblefield">
+                        <input ng-model="profile.dob" class="form-control" placeholder="Date Of Birth"  placeholder="Birthday" onfocus="(this.type='date')" onblur="(this.type='text')"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.website" class="form-control" placeholder="Website"  ng-disabled="visiblefield">
 
-                        <input type="text" ng-model="profile.address" class="form-control" placeholder="Address" />
-                        <input type="text" ng-model="profile.city" class="form-control" placeholder="city" />
-                        <input type="text" ng-model="profile.pincode" class="form-control" placeholder="Pincode" />
-                        <input type="text" ng-model="profile.state" class="form-control" placeholder="State" />
-                        <input type="text" ng-model="profile.country" class="form-control" placeholder="Country" />
+                        <input type="text" ng-model="profile.address" class="form-control" placeholder="Address"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.city" class="form-control" placeholder="city"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.pincode" class="form-control" placeholder="Pincode"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.state" class="form-control" placeholder="State"  ng-disabled="visiblefield">
+                        <input type="text" ng-model="profile.country" class="form-control" placeholder="Country"  ng-disabled="visiblefield">
 
 
-                        <input type="email" ng-model="profile.google" class="form-control" placeholder="Google Email Address" />
-                        <input type="email" ng-model="profile.facebookuserid" class="form-control" placeholder="Facebook Email Address" />
+                        <input type="email" ng-model="profile.google" class="form-control" placeholder="Google Email Address"  ng-disabled="visiblefield">
+                        <input type="email" ng-model="profile.facebookuserid" class="form-control" placeholder="Facebook Email Address"  ng-disabled="visiblefield">
+                        <div class="alert" ng-class="alertmsg" role="alert" ng-if="profilemsg!=''">
+                            {{profilemsg}}
+                        </div>
+                        <button class="btn  form-control" ng-click="visiblefield=!visiblefield">Edit</button>
                         <button class="btn  form-control" ng-click="saveprofile(profile)">Save</button>
                     </div>
                 </div>
