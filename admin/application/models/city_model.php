@@ -240,6 +240,41 @@ class City_model extends CI_Model
 		return $query;
         }
         
+    
+    
+	public function createbycsv($file)
+	{
+        foreach ($file as $row)
+        {
+            $city=$row['city'];
+            $cityquery=$this->db->query("SELECT * FROM `city` where `name`LIKE '$city'")->row();
+            if(empty($cityquery))
+            {
+                $this->db->query("INSERT INTO `city`(`name`) VALUES ('$city')");
+                $cityid=$this->db->insert_id();
+            }
+            else
+            {
+                $cityid=$cityquery->id;
+            }
+            
+            $area=$row['area'];
+            $pincode=$row['pincode'];
+            $areaquery=$this->db->query("SELECT * FROM `location` where `name`LIKE '$area' AND `cityid`='$cityid'")->row();
+            if(empty($areaquery))
+            {
+                $this->db->query("INSERT INTO `location`(`name`,`cityid`,`pincode`) VALUES ('$area','$city','$pincode')");
+                $areaid=$this->db->insert_id();
+            }
+            else
+            {
+                $areaid=$cityquery->id;
+            }
+            
+        }
+			return  1;
+	}
+    
     //-----------------Changes made avinash
     
     

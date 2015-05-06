@@ -377,7 +377,7 @@ HAVING `enddateofbanner`=`fivedaysbefore`")->result();
 		$query=$this->db->query("SELECT `listingcategory`.`listing`, `listingcategory`.`category`,`listing`.`name`,`listing`.`id` AS `listingid`,ROUND(( 3959 * acos( cos( radians($lat) ) * cos( radians(`listing`. `lat` ) ) 
    * cos( radians(`listing`.`long`) - radians($long)) + sin(radians($lat)) 
    * sin( radians(`listing`. `lat`)))),2)
-          AS `dist`, `listing`. `user`, `listing`.`lat`, `listing`.`long`, `listing`.`address`, `listing`.`area`, `listing`.`city`, `listing`.`pincode`, `listing`.`state`, `listing`.`country`, `listing`.`description`, `listing`.`logo`, `listing`.`contactno`, `listing`.`email`, `listing`.`website`, `listing`.`facebook`, `listing`.`twitter`, `listing`.`googleplus`, `listing`.`yearofestablishment`, `listing`.`timeofoperation_start`, `listing`.`timeofoperation_end`, `listing`.`type`, `listing`.`credits`, `listing`.`isverified`, `listing`.`video` ,`city`.`name` AS `cityname`,`category`.`name` AS `categoryname`,`category`.`banner` AS `banner`,`listing`.`deletestatus`
+          AS `dist`, `listing`. `user`, `listing`.`lat`, `listing`.`long`, `listing`.`address`, `listing`.`area`, `listing`.`city`, `listing`.`pincode`, `listing`.`state`, `listing`.`country`, `listing`.`description`, `listing`.`logo`, `listing`.`contactno`, `listing`.`email`, `listing`.`website`, `listing`.`facebook`, `listing`.`twitter`, `listing`.`googleplus`, `listing`.`yearofestablishment`, `listing`.`timeofoperation_start`, `listing`.`timeofoperation_end`, `listing`.`type`, `listing`.`credits`, `listing`.`isverified`, `listing`.`video` ,`city`.`name` AS `cityname`,`category`.`name` AS `categoryname`,`category`.`banner` AS `banner`,`listing`.`deletestatus`,`area`.`name` AS `areaname`
 FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
@@ -480,6 +480,18 @@ ORDER BY `dist` ASC
         return $ret;
     }
     
+        function getexpirednotification()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `typeofimage`, `logo`, `image`, `banner`, `startdateofbanner`, `enddateofbanner` ,NOW() AS `today` FROM `category` HAVING `enddateofbanner`<`today`")->result();
+		return $query;
+        }
+        function getupcommingnotification()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `parent`, `status`, `typeofimage`, `logo`, `image`, `banner`, `startdateofbanner`, `enddateofbanner` ,NOW() AS `today`
+FROM `category` 
+HAVING `enddateofbanner`>`today`")->result();
+		return $query;
+        }
     
 }
 ?>
