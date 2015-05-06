@@ -386,13 +386,13 @@ HAVING `enddateofbanner`=`fivedaysbefore`")->result();
 		$query=$this->db->query("SELECT `listingcategory`.`listing`, `listingcategory`.`category`,`listing`.`name`,`listing`.`id` AS `listingid`,ROUND(( 3959 * acos( cos( radians($lat) ) * cos( radians(`listing`. `lat` ) ) 
    * cos( radians(`listing`.`long`) - radians($long)) + sin(radians($lat)) 
    * sin( radians(`listing`. `lat`)))),2)
-          AS `dist`, `listing`. `user`, `listing`.`lat`, `listing`.`long`, `listing`.`address`, `listing`.`area`, `listing`.`city`, `listing`.`pincode`, `listing`.`state`, `listing`.`country`, `listing`.`description`, `listing`.`logo`, `listing`.`contactno`, `listing`.`email`, `listing`.`website`, `listing`.`facebook`, `listing`.`twitter`, `listing`.`googleplus`, `listing`.`yearofestablishment`, `listing`.`timeofoperation_start`, `listing`.`timeofoperation_end`, `listing`.`type`, `listing`.`credits`, `listing`.`isverified`, `listing`.`video` ,`city`.`name` AS `cityname`,`category`.`name` AS `categoryname`,`category`.`banner` AS `banner`,`listing`.`deletestatus`,`location`.`name` AS `areaname`
+          AS `dist`, `listing`. `user`, `listing`.`lat`, `listing`.`long`, `listing`.`address`, `listing`.`area`, `listing`.`city`, `listing`.`pincode`, `listing`.`state`, `listing`.`country`, `listing`.`description`, `listing`.`logo`, `listing`.`contactno`, `listing`.`email`, `listing`.`website`, `listing`.`facebook`, `listing`.`twitter`, `listing`.`googleplus`, `listing`.`yearofestablishment`, `listing`.`timeofoperation_start`, `listing`.`timeofoperation_end`, `listing`.`type`, `listing`.`credits`, `listing`.`isverified`, `listing`.`video` ,`city`.`name` AS `cityname`,`category`.`name` AS `categoryname`,`category`.`banner` AS `banner`,`listing`.`deletestatus`,`location`.`name` AS `areaname`,CONCAT_WS('',`category`.`name`,`listing`.`name`) AS `fullname` 
 FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
 LEFT OUTER JOIN `city` ON `city`.`id`=`listing`.`city`
 LEFT OUTER JOIN `location` ON `location`.`id`=`listing`.`area`
-WHERE ( `category`.`name` LIKE '%$category%' OR `listing`.`name` LIKE '%$category%' ) AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 $areawhere
+WHERE `fullname` LIKE '%$category%' AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 $areawhere
 ORDER BY `dist` ASC
         LIMIT 0 , 10")->result();
 		
