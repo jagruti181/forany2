@@ -324,7 +324,7 @@ phonecatControllers.controller('category',
 
     
         
-        $scope.rating = 7;
+        $scope.rating = 2;
         $scope.rateFunction = function(rating) {
           alert('Rating selected - ' + rating);
         };
