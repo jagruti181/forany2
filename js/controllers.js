@@ -322,6 +322,14 @@ phonecatControllers.controller('category',
         $scope.listingid = '';
         $scope.enquirymsg = '';
 
+    
+        
+        $scope.rating = 7;
+        $scope.rateFunction = function(rating) {
+          alert('Rating selected - ' + rating);
+        };
+    
+    
         $scope.onemailclick = function(listing) {
             console.log(listing);
             $.jStorage.set("listingid", listing);
@@ -551,6 +559,11 @@ phonecatControllers.controller('detail',
         $scope.enquiry = [];
         $scope.recentvisit = [];
 
+    
+    
+    
+    
+    
         $scope.user=RestService.getjuser();
 
          //        start send email to user
@@ -807,7 +820,7 @@ phonecatControllers.controller('profile',
 
             console.log(data);
             if (data == "1") {
-                $scope.visiblefield = "false";
+                $scope.visiblefield = "true";
                 $scope.profilemsg = "Profile Updated";
                 $scope.alertmsg = "alert-success";
             }

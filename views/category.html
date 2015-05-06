@@ -3,11 +3,11 @@
         <toaster-container></toaster-container>
         <div class="banner">
             <img ng-src="{{banner.banner | imagepath3}}" ng-show="banner.banner==''" width="100%">
-<!--            <img ng-src="{{'png/'+banner.banner | imagepath1}}" ng-show="banner.banner!=''" width="100%">  'ad/ad.jpg'-->
+            <!--            <img ng-src="{{'png/'+banner.banner | imagepath1}}" ng-show="banner.banner!=''" width="100%">  'ad/ad.jpg'-->
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <div class="cat-aside" >
+                <div class="cat-aside">
                     <div class="left-sidebar">
                         <div class="panel-group category-products" style="padding-left: 17px;" id="accordian">
                             <!--category-productsr-->
@@ -33,6 +33,10 @@
                             </div>
                         </div>
                         <!--/brands_products-->
+
+
+
+
 
 
 
@@ -76,6 +80,14 @@ left: 387px;">Enquiry</a>
                             </p>
                             </div>
 
+
+                            
+  
+                            <h3>Rating</h3>
+
+                            <div class="star-rating" star-rating rating-value="rating" data-max="10" on-rating-selected="rateFunction(rating)">
+                            </div>
+
 <!--
                             <div class="img-cat" ng-if="list.type==1">
                            <img src="{{'png/free.png'|imagepath2}}">
@@ -88,7 +100,7 @@ left: 387px;">Enquiry</a>
                                         <span class='st_linkedin_hcount' displayText='LinkedIn'></span>
                                         <span class='st_googleplus_hcount' displayText='Google +'></span>
                                 </div>
--->
+                                -->
                             </div>
                         </div>
                     </div>
@@ -101,7 +113,7 @@ left: 387px;">Enquiry</a>
 
 
 <script>
-    $(".panel-title").click(function () {
+    $(".panel-title").click(function() {
         console.log("im in");
     });
 </script>
