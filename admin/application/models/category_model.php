@@ -374,6 +374,15 @@ HAVING `enddateofbanner`=`fivedaysbefore`")->result();
     
     public function searchcategory($category,$city,$area,$lat,$long)
 	{
+        $areawhere="";
+        if($area=="")
+        {
+            $areawhere="";
+        }
+        else
+        {
+            $area=" AND `location`.`id`= '$area' ";
+        }
 		$query=$this->db->query("SELECT `listingcategory`.`listing`, `listingcategory`.`category`,`listing`.`name`,`listing`.`id` AS `listingid`,ROUND(( 3959 * acos( cos( radians($lat) ) * cos( radians(`listing`. `lat` ) ) 
    * cos( radians(`listing`.`long`) - radians($long)) + sin(radians($lat)) 
    * sin( radians(`listing`. `lat`)))),2)
@@ -383,7 +392,7 @@ LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `category`.`id`=`listingcategory`.`category`
 LEFT OUTER JOIN `city` ON `city`.`id`=`listing`.`city`
 LEFT OUTER JOIN `location` ON `location`.`id`=`listing`.`area`
-WHERE ( `category`.`name` LIKE '%$category%' OR `listing`.`name` LIKE '%$category%' ) AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 AND `location`.`id`= '$area'
+WHERE ( `category`.`name` LIKE '%$category%' OR `listing`.`name` LIKE '%$category%' ) AND `city`.`id` = '$city' AND `listing`.`deletestatus`='1' AND `listing`.`status`=1 $area
 ORDER BY `dist` ASC
         LIMIT 0 , 10")->result();
 		
