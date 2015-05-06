@@ -521,6 +521,7 @@ h6 {
 .btn {
     padding: 8px 5px !important;
     font-size: small !important;
+    display: inline-block!important;
 }
 .btn:,
 .btn:focus {
