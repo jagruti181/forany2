@@ -84,6 +84,18 @@ class Json extends CI_Controller
             $daysofoperation=$data['daysofoperation'];
             $logo=$data['logo'];
             
+        $message="<h3>All Details Of Listing</h3><br>Listing Name:'$name' <br>Listing address:'$address' <br>Listing state:'$state' <br>Listing contactno:'$contact' <br>Listing email:'$email' <br>Listing yearofestablishment:'$yearofestablishment' <br>";
+//        echo $msg;
+        //to user
+        $this->load->library('email');
+        $this->email->from('avinash@wohlig.com', 'For Any Information');
+        $this->email->to($email);
+        $this->email->subject('Thank You For Creating A Listing');
+        $this->email->message($message);
+
+        $this->email->send();
+        
+        
 			if($this->frontend_model->createlisting($name,$user,$lat,$long,$address,$area,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$video,$logo,$category,$modeofpayment,$daysofoperation)==0)
 			$data['message']="0";
 			else
