@@ -375,6 +375,13 @@ FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `listingcategory`.`category`=`category`.`id`
 WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1 AND `listing`.`status`=1")->result();
+        
+		foreach($query as $p_row)
+		{
+			$listing = $p_row->listing;
+			$rating=$this->db->query("SELECT ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$listing'")->row();
+            $p_row->rating=$rating->rating;
+		}
 		return $query;
 	}
 	public function getonelistingbyid($id)
@@ -402,6 +409,8 @@ FROM `listingdaysofoperation`
 LEFT OUTER JOIN `daysofoperation` ON `daysofoperation`.`id`=`listingdaysofoperation`.`daysofoperation`
 WHERE `listingdaysofoperation`.`listing`='$id'")->result();
         
+        $ratingquery=$this->db->query("SELECT ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$id'")->row();
+        $query['rating']=$ratingquery->rating;
 		return $query;
 	}
     

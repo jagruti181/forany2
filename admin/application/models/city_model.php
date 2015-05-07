@@ -240,6 +240,14 @@ class City_model extends CI_Model
 		return $query;
         }
         
+    function uploadareacsv()
+	{
+		$access = array("5","1");
+		$this->checkaccess($access);
+		$data[ 'page' ] = 'uploadareacsv';
+		$data[ 'title' ] = 'Upload area';
+		$this->load->view( 'template', $data );
+	} 
     
     
 	public function createbycsv($file)
@@ -263,12 +271,12 @@ class City_model extends CI_Model
             $areaquery=$this->db->query("SELECT * FROM `location` where `name`LIKE '$area' AND `cityid`='$cityid'")->row();
             if(empty($areaquery))
             {
-                $this->db->query("INSERT INTO `location`(`name`,`cityid`,`pincode`) VALUES ('$area','$city','$pincode')");
+                $this->db->query("INSERT INTO `location`(`name`,`cityid`,`pincode`) VALUES ('$area','$cityid','$pincode')");
                 $areaid=$this->db->insert_id();
             }
             else
             {
-                $areaid=$cityquery->id;
+                $areaid=$areaquery->id;
             }
             
         }

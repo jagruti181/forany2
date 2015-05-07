@@ -3781,7 +3781,7 @@ class Site extends CI_Controller
         }
         $fullfilepath=$filepath."".$file;
         $file = $this->csvreader->parse_file($fullfilepath);
-        $id1=$this->area_model->createbycsv($file);
+        $id1=$this->city_model->createbycsv($file);
 //        echo $id1;
         
         if($id1==0)
@@ -3789,7 +3789,7 @@ class Site extends CI_Controller
 		else
 		$data['alertsuccess']="areas Uploaded Successfully.";
         
-        $data['redirect']="site/viewarea";
+        $data['redirect']="site/viewcity";
         $this->load->view("redirect",$data);
     }
     
