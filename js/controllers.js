@@ -321,12 +321,77 @@ phonecatControllers.controller('category',
         $scope.msgarea = false;
         $scope.listingid = '';
         $scope.enquirymsg = '';
+        $scope.ratingmsg = '';
+        $scope.alertmsg = "alert-success";
 
+    
+        //  LOGIN FROM CATEGORY START
+        $scope.login = [];
+
+        var loginsuccess = function(data, status) {
+            console.log("after login");
+            console.log(data);
+            if (data != "false") {
+                $scope.loginlogout = "Logout";
+                RestService.setjuser(data);
+                window.location.reload();
+            } else {
+                toaster.pop("error", "Login Error", "Invalid Username Or Password", 5000);
+            }
+
+        };
+
+        $scope.userlogin = function(login) {
+
+            //login validation
+            $scope.allvalidation1 = [{
+                field: $scope.login.email,
+                name: "Email",
+                validation: ""
+            }, {
+                field: $scope.login.password,
+                name: "Password",
+                validation: ""
+            }];
+
+            var check = formvalidation($scope.allvalidation1);
+
+            if (check == '') {
+
+                RestService.login(login.email, login.password).success(loginsuccess);
+
+            } else {
+                console.log("not ckeck");
+                toaster.pop('error', "Login", "Enter Proper " + check, 5000);
+            }
+        }
+    
+        //  LOGIN FROM CATEGORY END
     
         
         $scope.rating = 2;
-        $scope.rateFunction = function(rating) {
-          alert('Rating selected - ' + rating);
+        var ratingsuccess = function(data, status){
+            console.log(data);
+            if(data == "1"){
+                $scope.ratingmsg = "Rated Successfully";
+                $scope.alertmsg = "alert-success";
+            }else{
+                $scope.ratingmsg = "Try later";
+                $scope.alertmsg = "alert-danger";
+            }
+        }
+        $scope.rateFunction = function(rating, listing) {
+            
+            if ($scope.user == 0) {
+                ngDialog.open({
+                    template: 'views/loginpup.html',
+                    controller: 'category'
+                });
+            } else {
+                RestService.addrating (rating, listing).success(ratingsuccess);
+            }
+            
+//          alert('Rating selected - ' + rating);
         };
     
     
@@ -338,6 +403,14 @@ phonecatControllers.controller('category',
                 controller: 'category'
             });
         };
+    
+        $scope.loginpop = function () {
+        ngDialog.open({
+                template: 'views/loginpup.html',
+                controller: 'category'
+            });
+        }
+    
         //    enquiry for listing
         $scope.enquiry = [];
         var enquirysuccess = function(data, status) {
@@ -417,13 +490,19 @@ phonecatControllers.controller('category',
         //listiung by category id
 
         var getlisting = function(data, status) {
-            console.log(data);
             if (data == "") {
                 $scope.msg = "No Listing";
                 $scope.msgarea = true;
             } else {
                 $scope.msgarea = false;
                 $scope.listings = data;
+                console.log("listing listing********************");
+                console.log($scope.listings);
+                for(var i = 0 ; i < $scope.listings.length ; i++){
+                    if(!$scope.listings[i].rating){
+                        $scope.listings[i].rating = 1;
+                    }
+                }
             }
 
         };
@@ -558,11 +637,8 @@ phonecatControllers.controller('detail',
         $scope.enquiryshow = false;
         $scope.enquiry = [];
         $scope.recentvisit = [];
+        $scope.rating = 1;
 
-    
-    
-    
-    
     
         $scope.user=RestService.getjuser();
 
@@ -637,6 +713,7 @@ phonecatControllers.controller('detail',
             console.log("sohan data sohan data############################");
             console.log(data);
             $scope.detail = data;
+            $scope.rating = data.rating;
             angular.extend($scope, {
                 centerProperty: {
                     lat: data.listing.lat,

@@ -49,6 +49,14 @@
 <!--    <script src="lib/js/angular.js"></script>-->
    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+    
+    
+<!--
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+-->
+    
+    
     <script src="lib/js/ng-tags-input.min.js"></script>
     <script src="lib/js/ngDialog.js"></script>
     <script src="lib/js/demo2.js"></script>

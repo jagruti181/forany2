@@ -121,6 +121,16 @@ var restservice = angular.module('restservice', [])
                 }
             });
         },
+        addrating: function (rating, listing) {
+            return $http({
+                url: adminurl + "addrating",
+                method: "POST",
+                data: {
+                    'rating': rating,
+                    'listing': listing
+                }
+            });
+        },
         saveprofile: function (profile) {
             return $http({
                 url: adminurl + "saveprofile",
