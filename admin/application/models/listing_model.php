@@ -644,19 +644,17 @@ WHERE `listingcategory`.`category`='$id' ";
 			'rating' => $rating
 		);
         $selectquery=$this->db->query("SELECT * FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'")->row();
-        print_r($selectquery);
         if(empty($selectquery))
         {
-            echo $
             $query=$this->db->insert( 'userlistingrating', $data );
-            return  $query;
+            return  1;
         }
         else
         {
             $presentid=$selectquery->id;
             $updatequery=$this->db->query("UPDATE `userlistingrating` SET `user`='$user',`listing`='$listing',`rating`='$rating',`timestamp`=NULL WHERE `id`='$presentid'");
             
-		return  $updatequery;
+		return  1;
 //            $deletequery=$this->db->query("DELETE FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'");
 //            $query=$this->db->insert( 'userlistingrating', $data );
         }
