@@ -638,7 +638,35 @@ phonecatControllers.controller('detail',
         $scope.enquiry = [];
         $scope.recentvisit = [];
         $scope.rating = 1;
+        $scope.ratingmsg = 'hi haa fhaa haa';
+        $scope.alertmsg = 'alert-danger';
 
+    
+        var ratingsuccess = function(data, status){
+            console.log(data);
+            if(data == "1"){
+                $scope.ratingmsg = "Rated Successfully";
+                $scope.alertmsg = "c";
+            }else{
+                $scope.ratingmsg = "Try later";
+                $scope.alertmsg = "alert-danger";
+            }
+        }
+        $scope.rateFunction = function(rating, listing) {
+            
+            if ($scope.user == 0) {
+                ngDialog.open({
+                    template: 'views/loginpup.html',
+                    controller: 'category'
+                });
+            } else {
+                RestService.addrating (rating, listing).success(ratingsuccess);
+            }
+            
+//          alert('Rating selected - ' + rating);
+        };
+    
+    
     
         $scope.user=RestService.getjuser();
 
