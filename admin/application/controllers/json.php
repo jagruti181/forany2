@@ -361,7 +361,6 @@ class Json extends CI_Controller
         return $ret;
     }
     
-    
     public function getspecialoffersbycategory()
     {
         $id=$this->input->get_post('categoryid');
