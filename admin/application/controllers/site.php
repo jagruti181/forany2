@@ -3080,6 +3080,8 @@ class Site extends CI_Controller
         $data['redirect']="site/viewlistingimages?id=".$listing;
         $this->load->view("redirect2",$data);
 	}
+    
+    
      //email
     
     public function sendmailtoavi()
@@ -3814,5 +3816,160 @@ class Site extends CI_Controller
 		$this->load->view('template',$data);
 	}
     
+    
+    //listingimages
+    
+	function viewuserlistingrating()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['table']=$this->listing_model->viewuserlistingrating($this->input->get('id'));
+		$data['before']=$this->listing_model->beforeedit($this->input->get('id'));
+		$data['page']='viewuserlistingrating';
+		$data['page2']='block/listingblock';
+		$data['title']='View userlistingrating';
+		$this->load->view('templatewith2',$data);
+	}
+    
+	public function createuserlistingrating()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['listing']=$this->input->get('id');
+		$data[ 'user' ] =$this->listing_model->getuserdropdown();
+        $data['before']=$this->listing_model->beforeedit($this->input->get('id'));
+//		$data['page']='viewuserlistingrating';
+		$data[ 'page' ] = 'createuserlistingrating';
+		$data['page2']='block/listingblock';
+		$data[ 'title' ] = 'Create listingimage';
+		$this->load->view( 'templatewith2', $data );	
+	}
+    
+	function createuserlistingratingsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('order','order','trim|required');
+		
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$access = array("1");
+            $this->checkaccess($access);
+            $data['listing']=$this->input->get('id');
+            $data[ 'page' ] = 'createuserlistingrating';
+            $data[ 'title' ] = 'Create listingimage';
+            $this->load->view( 'template', $data );		
+		}
+		else
+		{
+            $order=$this->input->post('order');
+            $listing=$this->input->post('listing');
+            
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            //echo $image;
+			if($this->listing_model->createuserlistingrating($listing,$order,$image)==0)
+			$data['alerterror']="New Image could not be created.";
+			else
+			$data['alertsuccess']="Image created Successfully.";
+			
+			$data['table']=$this->listing_model->viewuserlistingrating($listing);
+            $data['redirect']="site/viewuserlistingrating?id=".$listing;
+			$this->load->view("redirect2",$data);
+//            $data['page']='viewuserlistingrating';
+//            $data['title']='View userlistingrating';
+//            $this->load->view('template',$data);
+		}
+	}
+    
+	public function edituserlistingrating()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['listing']=$this->input->get('listingid');
+        $data['before']=$this->listing_model->beforeedit($this->input->get('listingid'));
+        $data['beforeuserlistingrating']=$this->listing_model->beforeedituserlistingrating($this->input->get('id'));
+//		$data['page']='viewuserlistingrating';
+		$data[ 'page' ] = 'edituserlistingrating';
+		$data['page2']='block/listingblock';
+		$data[ 'title' ] = 'Create listingimage';
+		$this->load->view( 'templatewith2', $data );	
+	}
+    
+	function edituserlistingratingsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('order','order','trim|required');
+        
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data['listing']=$this->input->get('listingid');
+            $data['before']=$this->listing_model->beforeedit($this->input->get('listingid'));
+            $data['beforeuserlistingrating']=$this->listing_model->beforeedituserlistingrating($this->input->get('id'));
+    //		$data['page']='viewuserlistingrating';
+            $data[ 'page' ] = 'edituserlistingrating';
+            $data['page2']='block/listingblock';
+            $data[ 'title' ] = 'Create listingimage';
+            $this->load->view( 'templatewith2', $data );
+		}
+		else
+		{
+			$id=$this->input->post('id');
+//            echo $id;
+            $order=$this->input->post('order');
+            $listing=$this->input->post('listing');
+//            echo $listing;
+            
+            $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+			}
+            
+            if($image=="")
+            {
+            $image=$this->listing_model->getuserlistingratingbyid($id);
+            $image=$image->image;
+            }
+//            echo $image;
+			if($this->listing_model->edituserlistingrating($id,$order,$image,$listing)==0)
+			$data['alerterror']="Image Editing was unsuccesful";
+			else
+			$data['alertsuccess']="Image edited Successfully.";
+			
+			$data['table']=$this->listing_model->viewuserlistingrating($listing);
+            $data['redirect']="site/viewuserlistingrating?id=".$listing;
+			$this->load->view("redirect2",$data);
+			
+		}
+	}
+    
+	function deleteuserlistingrating()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->listing_model->deleteuserlistingrating($this->input->get('id'));
+        $listing=$this->input->get('listingid');
+        $data['alerterror']="Image Deleted Successfully.";
+		$data['table']=$this->listing_model->viewuserlistingrating($listing);
+        $data['redirect']="site/viewuserlistingrating?id=".$listing;
+        $this->load->view("redirect2",$data);
+	}
 }
 ?>

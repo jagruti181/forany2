@@ -328,6 +328,17 @@ class Listing_model extends CI_Model
 		$query=$this->db->query($query)->result();
 		return $query;
 	}
+	function viewuserlistingrating($id)
+	{
+		$query="SELECT `userlistingrating`.`id`, `userlistingrating`.`user`, `userlistingrating`.`rating`, `userlistingrating`.`listing` ,`user`.`firstname` AS `firstname`,`user`.`lastname` AS `lastname`,`listing`.`name` AS `listingname`
+        FROM `userlistingrating` 
+        LEFT OUTER JOIN `user` ON `userlistingrating`.`user`=`user`.`id`
+        LEFT OUTER JOIN `listing` ON `userlistingrating`.`listing`=`listing`.`id`
+        WHERE `listing`='$id'";
+	   
+		$query=$this->db->query($query)->result();
+		return $query;
+	}
     public function createlistingimages($listing,$order,$image)
 	{
 		$data  = array(
@@ -577,6 +588,28 @@ WHERE `listingcategory`.`category`='$id' ";
         $area = $this->db->query($query)->result();
         return $area;
     }
+    
+    
+    public function addrating($user,$listing,$rating)
+	{
+		$data  = array(
+			'user' => $user,
+			'listing' => $listing,
+			'rating' => $rating
+		);
+        $selectquery=$this->db->query("SELECT * FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'")->row();
+        if(empty($selectquery))
+        {
+            $query=$this->db->insert( 'userlistingrating', $data );
+        }
+        else
+        {
+            $deletequery=$this->db->query("DELETE FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'");
+            $query=$this->db->insert( 'userlistingrating', $data );
+        }
+//		$query=$this->db->insert( 'userlistingrating', $data );
+		return  1;
+	}
     
 }
 ?>
