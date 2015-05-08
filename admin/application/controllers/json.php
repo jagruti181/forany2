@@ -399,9 +399,11 @@ class Json extends CI_Controller
     
     public function addrating()
     {
-        $userid=$this->input->get_post('user');
-        $listing=$this->input->get_post('listing');
-        $rating=$this->input->get_post('rating');
+        $data = json_decode(file_get_contents('php://input'), true);
+        $listing=$data['listing'];
+        $rating=$data['rating'];
+//        $user=1;
+        $user=$this->session->userdata("id");
         $data['message']=$this->listing_model->addrating($user,$listing,$rating);
         $this->load->view('json',$data);
     }

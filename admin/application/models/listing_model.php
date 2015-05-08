@@ -175,6 +175,13 @@ class Listing_model extends CI_Model
 		return $query;
 	}
     
+	public function beforeedituserlistingrating( $id )
+	{
+		$this->db->where( 'id', $id );
+		$query=$this->db->get( 'userlistingrating' )->row();
+		return $query;
+	}
+    
 	public function getlogobylistingid($id)
 	{
 		$query=$this->db->query("SELECT `logo` FROM `listing` WHERE `id`='$id'")->row();
@@ -330,7 +337,7 @@ class Listing_model extends CI_Model
 	}
 	function viewuserlistingrating($id)
 	{
-		$query="SELECT `userlistingrating`.`id`, `userlistingrating`.`user`, `userlistingrating`.`rating`, `userlistingrating`.`listing` ,`user`.`firstname` AS `firstname`,`user`.`lastname` AS `lastname`,`listing`.`name` AS `listingname`
+		$query="SELECT `userlistingrating`.`id`, `userlistingrating`.`user`, `userlistingrating`.`rating`, `userlistingrating`.`listing`, `userlistingrating`.`timestamp` ,`user`.`firstname` AS `firstname`,`user`.`lastname` AS `lastname`,`listing`.`name` AS `listingname`
         FROM `userlistingrating` 
         LEFT OUTER JOIN `user` ON `userlistingrating`.`user`=`user`.`id`
         LEFT OUTER JOIN `listing` ON `userlistingrating`.`listing`=`listing`.`id`
@@ -353,6 +360,25 @@ class Listing_model extends CI_Model
 			return  1;
 	}
     
+    public function createuserlistingrating($user,$listing,$rating)
+	{
+		$data  = array(
+			'listing' => $listing,
+			'user' => $user,
+			'rating' => $rating
+		);
+        $queryselect=$this->db->query("SELECT * FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'")->row();
+        if(empty($queryselect))
+        {
+            $query=$this->db->insert( 'userlistingrating', $data );  
+            return 1;
+        }
+        else
+        {
+            return  0;
+        }
+	}
+    
 	public function editlistingimages($id,$order,$image,$listing)
 	{
 		$data  = array(
@@ -366,9 +392,27 @@ class Listing_model extends CI_Model
         
 		return 1;
 	}
+	public function edituserlistingrating($id,$user,$listing,$rating)
+	{
+		$data  = array(
+			'listing' => $listing,
+			'user' => $user,
+			'rating' => $rating
+		);
+		
+		$this->db->where( 'id', $id );
+		$query=$this->db->update( 'userlistingrating', $data );
+        
+		return 1;
+	}
 	function deletelistingimages($id)
 	{
 		$query=$this->db->query("DELETE FROM `listingimages` WHERE `id`='$id'");
+	}
+    
+	function deleteuserlistingrating($id)
+	{
+		$query=$this->db->query("DELETE FROM `userlistingrating` WHERE `id`='$id'");
 	}
     
 	public function getlistingimagesbyid($id)
@@ -390,8 +434,9 @@ WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1 AND `lis
 		foreach($query as $p_row)
 		{
 			$listing = $p_row->listing;
-			$rating=$this->db->query("SELECT ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$listing'")->row();
+			$rating=$this->db->query("SELECT COUNT(id) AS `totalratings`,ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$listing'")->row();
             $p_row->rating=$rating->rating;
+            $p_row->totalratings=$rating->totalratings;
 		}
 		return $query;
 	}
@@ -420,8 +465,9 @@ FROM `listingdaysofoperation`
 LEFT OUTER JOIN `daysofoperation` ON `daysofoperation`.`id`=`listingdaysofoperation`.`daysofoperation`
 WHERE `listingdaysofoperation`.`listing`='$id'")->result();
         
-        $ratingquery=$this->db->query("SELECT ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$id'")->row();
+        $ratingquery=$this->db->query("SELECT COUNT(id) AS `totalratings`,ROUND(AVG(`rating`)) AS `rating` FROM `userlistingrating` WHERE `listing`='$id'")->row();
         $query['rating']=$ratingquery->rating;
+        $query['totalratings']=$ratingquery->totalratings;
 		return $query;
 	}
     
@@ -598,17 +644,23 @@ WHERE `listingcategory`.`category`='$id' ";
 			'rating' => $rating
 		);
         $selectquery=$this->db->query("SELECT * FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'")->row();
+        print_r($selectquery);
         if(empty($selectquery))
         {
+            echo $
             $query=$this->db->insert( 'userlistingrating', $data );
+            return  $query;
         }
         else
         {
-            $deletequery=$this->db->query("DELETE FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'");
-            $query=$this->db->insert( 'userlistingrating', $data );
+            $presentid=$selectquery->id;
+            $updatequery=$this->db->query("UPDATE `userlistingrating` SET `user`='$user',`listing`='$listing',`rating`='$rating',`timestamp`=NULL WHERE `id`='$presentid'");
+            
+		return  $updatequery;
+//            $deletequery=$this->db->query("DELETE FROM `userlistingrating` WHERE `user`='$user' AND `listing`='$listing'");
+//            $query=$this->db->insert( 'userlistingrating', $data );
         }
-//		$query=$this->db->insert( 'userlistingrating', $data );
-		return  1;
+        
 	}
     
 }
