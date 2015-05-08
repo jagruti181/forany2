@@ -9,6 +9,7 @@ class HAuth extends CI_Controller {
 
 	public function login($provider)
 	{
+        $returnurl=$this->input->get('returnurl');
 		log_message('debug', "controllers.HAuth.login($provider) called");
 
 		try
@@ -55,7 +56,8 @@ class HAuth extends CI_Controller {
                         );
 
                         $this->session->set_userdata($newdata);
-                        redirect('http://www.foranyinformation.com');
+                        redirect($returnurl);
+//                        redirect('http://www.foranyinformation.com');
                     }
                     else
                     {
@@ -74,7 +76,8 @@ class HAuth extends CI_Controller {
                         );
                         
                         $this->session->set_userdata($newdata);
-                        redirect('http://www.foranyinformation.com');
+//                        redirect('http://www.foranyinformation.com');
+                        redirect($returnurl);
                     }
 					log_message('info', 'controllers.HAuth.login: user profile:'.PHP_EOL.print_r($user_profile, TRUE));
 //					$data['user_profile'] = $user_profile;
