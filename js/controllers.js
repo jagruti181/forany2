@@ -310,6 +310,12 @@ phonecatControllers.controller('home',
 
     });
 
+phonecatControllers.controller('searchcat',
+    function($scope, TemplateService, RestService, $location, $routeParams, ngDialog, toaster) {
+    
+        
+    
+});
 phonecatControllers.controller('category',
     function($scope, TemplateService, RestService, $location, $routeParams, ngDialog, toaster) {
         $scope.template = TemplateService;
@@ -373,11 +379,13 @@ phonecatControllers.controller('category',
         var ratingsuccess = function(data, status){
             console.log(data);
             if(data == "1"){
-                $scope.ratingmsg = "Rated Successfully";
-                $scope.alertmsg = "alert-success";
+                toaster.pop('success', "Rating", "Rated successfuly", 5000);
+//                $scope.ratingmsg = "Rated Successfully";
+//                $scope.alertmsg = "alert-success";
             }else{
-                $scope.ratingmsg = "Try later";
-                $scope.alertmsg = "alert-danger";
+                toaster.pop('error', "Rating", "Try later", 5000);
+//                $scope.ratingmsg = "Try later";
+//                $scope.alertmsg = "alert-danger";
             }
         }
         $scope.rateFunction = function(rating, listing) {
@@ -638,15 +646,15 @@ phonecatControllers.controller('detail',
         $scope.enquiry = [];
         $scope.recentvisit = [];
         $scope.rating = 1;
-        $scope.ratingmsg = 'hi haa fhaa haa';
-        $scope.alertmsg = 'alert-danger';
+        $scope.ratingmsg = '';
+        $scope.alertmsg = '';
 
     
         var ratingsuccess = function(data, status){
             console.log(data);
             if(data == "1"){
                 $scope.ratingmsg = "Rated Successfully";
-                $scope.alertmsg = "c";
+                $scope.alertmsg = "alert-success";
             }else{
                 $scope.ratingmsg = "Try later";
                 $scope.alertmsg = "alert-danger";
@@ -1117,6 +1125,9 @@ phonecatControllers.controller('OtherCtrl',
         $scope.myemail = "";
         $scope.profilepasword = "false";
         $scope.changepasswordvisible = "false";
+        
+        $scope.area = "";
+        $scope.form = [];
 
         $scope.showhidediv = function() {
             if ($scope.profilepasword == "false")
@@ -1134,6 +1145,19 @@ phonecatControllers.controller('OtherCtrl',
         }
 
 
+        var getlocation = function(data, status) {
+            console.log(data);
+            $scope.areas = data;
+            //            $scope.form.area = data[0].id;
+//            for
+            $scope.form.area = "";
+        };
+
+        $scope.citychange = function(city) {
+            console.log("in change city");
+            console.log(city);
+            RestService.viewonecitylocations(city).success(getlocation);
+        }
 
         var callback = function() {
             console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ss");
@@ -1261,6 +1285,67 @@ phonecatControllers.controller('OtherCtrl',
 
         // inner header search 
 
+        
+        
+        
+        
+        
+        function showPosition2(position) {
+            var latlon = position.coords.latitude + "," + position.coords.longitude;
+            console.log(position);
+            //$scope.coords = position.coords;
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+
+            $.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyDqN3t8_Nb04MF7jTufq-bkEHogZxyeUHY", {}, function(data) {
+                console.log(data);
+                data = data.results[0].address_components;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].types[0] == "locality") {
+                        cityis.selected = data[i].long_name;
+                        //                        console.log(cityis.selected);
+                        if (cityis.selected == "Mumbai") {
+                            $scope.prefixnum = "";
+                        }
+                    }
+
+                    if (data[i].types[0] == "sublocality_level_1") {
+                        //                        cityis.selected = data[i].long_name;
+                        area = data[i].long_name;
+                        $scope.area1 = data[i].long_name;
+                        $scope.form.area = data[i].long_name;
+                        console.log($scope.form.area);
+
+                    }
+                }
+                var citywegot = 9;
+                var cities = $scope.cities;
+                for (var i = 0; i < $scope.cities.length; i++) {
+
+                    //                    console.log($scope.cities[i].name == cityis.selected);
+                    if ($scope.cities[i].name == cityis.selected) {
+                        $scope.city = $scope.cities[i].name;
+                        citywegot = $scope.cities[i].id;
+                    }
+                }
+                $scope.form.cityy = citywegot;
+                city = citywegot;
+                $scope.$apply();
+                console.log(citywegot);
+                $scope.citychange(citywegot);
+                $scope.$apply();
+
+            });
+
+        }
+
+        
+        
+        $scope.innershearch = function() {
+            RestService.recentvisit($scope.searchid);
+            $location.url("/detail/" + $scope.searchid);
+        };
+
         var searchsuccess = function(data, status) {
             console.log(data);
             if (data != "") {
@@ -1271,42 +1356,56 @@ phonecatControllers.controller('OtherCtrl',
 
             }
             for (var i = 0; i < data.length; i++) {
+
                 if (data[i].dist != null && data[i].dist != '') {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) " + data[i].dist + " KM ";
                 } else {
                     $scope.searchdrop[i].search = data[i].categoryname + " " + data[i].name + " ( " + data[i].area + " ) ";
                 }
+
             }
         };
-
-        $scope.searchlist = function(text) {
+        $scope.searchlist = function(text, city, area) {
             //            if (!city)
             //                city = 0;
-            console.log("my city");
-            console.log(city);
-            console.log("my area");
-            console.log(area);
 
+            city = city;
             // substr()
             text = text.split(' in ');
-            console.log("search tet");
             $scope.searchtext = text[0];
-            console.log("city");
-            console.log(text[1]);
             if (!text[1]) {
-                $scope.area = '';
-                //                $scope.area = $scope.area;
+                $scope.area = $scope.area;
+                $scope.areatosend = area;
             } else {
                 $scope.area = text[1];
+                $scope.areatosend = text[1];
             }
 
             if (text[0] != "") {
-
-                RestService.searchcategory($scope.searchtext, city, $scope.area, lat, long).success(searchsuccess);
+                console.log($scope.areatosend);
+                RestService.searchcategory($scope.searchtext, city, $scope.areatosend, lat, long).success(searchsuccess);
             } else {
                 $scope.searchshow = false;
             }
         }
+        var getcity = function(data, status) {
+            $scope.cities = data;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition2, showError);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        };
+        RestService.getallcity().success(getcity);
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     });
 
