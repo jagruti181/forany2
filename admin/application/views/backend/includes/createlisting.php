@@ -269,6 +269,18 @@
 					  <input type="text" id="pointer" name="pointer" class="form-control" value="<?php echo set_value('pointer'); ?>">
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Pointer Start Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="pointerstartdate" name="pointerstartdate" class="form-control" value="<?php echo set_value('pointerstartdate'); ?>">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Pointer end Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="pointerenddate" name="pointerenddate" class="form-control" value="<?php echo set_value('pointerenddate'); ?>">
+					</div>
+				</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Logo</label>
 				  <div class="col-sm-4">

@@ -4,7 +4,7 @@ class Site extends CI_Controller
 	public function __construct( )
 	{
 		parent::__construct();
-		
+		$this->db->query("SET time_zone = '+05:30'");
 		$this->is_logged_in();
 	}
 	function is_logged_in( )
@@ -198,7 +198,7 @@ class Site extends CI_Controller
             $orderorder="ASC";
         }
        
-        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `user` INNER JOIN `accesslevel` ON `user`.`accesslevel`=`accesslevel`.`id`","WHERE `user`.`accesslevel`=1");
+        $data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `user` INNER JOIN `accesslevel` ON `user`.`accesslevel`=`accesslevel`.`id`","WHERE `user`.`accesslevel`=1 OR `user`.`accesslevel`=2");
         
 		$this->load->view("json",$data);
 	} 
@@ -1252,6 +1252,8 @@ class Site extends CI_Controller
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
             $daysofoperation=$this->input->post('daysofoperation');
+            $pointerstartdate=$this->input->post('pointerstartdate');
+            $pointerenddate=$this->input->post('pointerenddate');
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1301,7 +1303,7 @@ class Site extends CI_Controller
         $this->email->send();
             
             
-			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)==0)
+			if($this->listing_model->create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status,$pointerstartdate,$pointerenddate)==0)
 			$data['alerterror']="New listing could not be created.";
 			else
 			$data['alertsuccess']="listing created Successfully.";
@@ -1346,7 +1348,7 @@ class Site extends CI_Controller
 	{
 		$access = array("1");
 		$this->checkaccess($access);
-		$this->form_validation->set_rules('name','Name','trim|required|max_length[30]');
+		$this->form_validation->set_rules('name','Name','trim|required');
 		$this->form_validation->set_rules('user','User','trim');
 		$this->form_validation->set_rules('lat','latitude','trim');
 		$this->form_validation->set_rules('long','longitude','trim');
@@ -1428,6 +1430,8 @@ class Site extends CI_Controller
             $category=$this->input->post('category');
             $modeofpayment=$this->input->post('modeofpayment');
             $daysofoperation=$this->input->post('daysofoperation');
+            $pointerstartdate=$this->input->post('pointerstartdate');
+            $pointerenddate=$this->input->post('pointerenddate');
             
             $config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpg|png|jpeg';
@@ -1469,7 +1473,7 @@ class Site extends CI_Controller
                 $logo=$logo->logo;
             }
             
-			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)==0)
+			if($this->listing_model->edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status,$pointerstartdate,$pointerenddate)==0)
 			$data['alerterror']="listing Editing was unsuccesful";
 			else
 			$data['alertsuccess']="listing edited Successfully.";
@@ -2451,8 +2455,10 @@ class Site extends CI_Controller
             $period=$this->input->post('period');
             $credits=$this->input->post('credits');
             $payedto=$this->input->post('payedto');
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
             
-			if($this->billing_model->create($listing,$user,$paymenttype,$amount,$period,$credits,$payedto)==0)
+			if($this->billing_model->create($listing,$user,$paymenttype,$amount,$period,$credits,$payedto,$startdate,$enddate)==0)
 			$data['alerterror']="New billing could not be created.";
 			else
 			$data['alertsuccess']="billing created Successfully.";
@@ -2511,8 +2517,10 @@ class Site extends CI_Controller
             $period=$this->input->post('period');
             $credits=$this->input->post('credits');
             $payedto=$this->input->post('payedto');
+            $startdate=$this->input->post('startdate');
+            $enddate=$this->input->post('enddate');
             
-			if($this->billing_model->edit($id,$listing,$user,$paymenttype,$amount,$period,$credits,$payedto)==0)
+			if($this->billing_model->edit($id,$listing,$user,$paymenttype,$amount,$period,$credits,$payedto,$startdate,$enddate)==0)
 			$data['alerterror']="billing Editing was unsuccesful";
 			else
 			$data['alertsuccess']="billing edited Successfully.";
@@ -3252,6 +3260,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
         $config['upload_path'] = './uploads/';
         $config['allowed_types'] = '*';
+        $config['max_size'] = '1000';
         $this->load->library('upload', $config);
         $filename="file";
         $file="";
@@ -3549,6 +3558,7 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$data['before']=$this->category_model->beforeeditcategory($this->input->get('id'));
 		$data['category']=$this->category_model->getcategorydropdown();
+		$data['listing']=$this->listing_model->getlistingdropdown();
 		$data[ 'status' ] =$this->category_model->getstatusdropdown();
 		$data['typeofimage']=$this->category_model->gettypeofimagedropdown();
 		$data['page']='editnotification';
@@ -3561,11 +3571,13 @@ class Site extends CI_Controller
 		$this->checkaccess($access);
 		$this->form_validation->set_rules('startdateofbanner','startdateofbanner','trim|');
 		$this->form_validation->set_rules('enddateofbanner','enddateofbanner','trim|');
+		$this->form_validation->set_rules('listing','listing','trim|');
 		if($this->form_validation->run() == FALSE)	
 		{
 			$data['alerterror'] = validation_errors();
 			$data[ 'status' ] =$this->category_model->getstatusdropdown();
 			$data['category']=$this->category_model->getcategorydropdown();
+            $data['listing']=$this->listing_model->getlistingdropdown();
             $data['typeofimage']=$this->category_model->gettypeofimagedropdown();
 			$data['before']=$this->category_model->beforeeditcategory($this->input->post('id'));
 			$data['page']='editcategory';
@@ -3578,6 +3590,7 @@ class Site extends CI_Controller
 			
 			$startdateofbanner=$this->input->post('startdateofbanner');
 			$enddateofbanner=$this->input->post('enddateofbanner');
+			$listing=$this->input->post('listing');
 			
             
             $config['upload_path'] = './uploads/';
@@ -3623,7 +3636,7 @@ class Site extends CI_Controller
                 $banner=$banner->banner;
                 
             }
-			if($this->category_model->editnotification($id,$banner,$startdateofbanner,$enddateofbanner)==0)
+			if($this->category_model->editnotification($id,$banner,$startdateofbanner,$enddateofbanner,$listing)==0)
 			$data['alerterror']="Notification Dates Editing was unsuccesful";
 			else
 			$data['alertsuccess']="Notification Dates edited Successfully.";
@@ -3726,7 +3739,7 @@ class Site extends CI_Controller
         //print_r($this->input->post('ids'));
         $userid=$this->session->userdata('id');
         $accesslevel=$this->session->userdata('accesslevel');
-        if($userid==1 && $accesslevel==1)
+        if($userid==74 && $accesslevel==1)
         {
             $data['table']=$this->listing_model->tejasdelete();
             $data['alertsuccess']="Listing Deleted Successfully";
@@ -3953,6 +3966,99 @@ class Site extends CI_Controller
 		$data['table']=$this->listing_model->viewuserlistingrating($listing);
         $data['redirect']="site/viewuserlistingrating?id=".$listing;
         $this->load->view("redirect2",$data);
+	}
+    
+    //listingnotification
+     
+	function viewlistingnotification()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['monthbefore']=$this->listing_model->getmonthbeforelistingnotifications();
+		$data['fivedaysbefore']=$this->listing_model->getfivedaysbeforelistingnotifications();
+		$data['page']='viewlistingnotification';
+		$data['title']='View listingNotifications';
+		$this->load->view('template',$data);
+	}
+    
+	function editlistingnotification()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['before']=$this->listing_model->beforeedit($this->input->get('id'));
+		$data['listing']=$this->listing_model->getlistingdropdown();
+		$data[ 'status' ] =$this->listing_model->getstatusdropdown();
+//		$data['typeofimage']=$this->category_model->gettypeofimagedropdown();
+		$data['page']='editlistingnotification';
+		$data['title']='Edit Listing Notification';
+		$this->load->view('template',$data);
+	}
+	function editlistingnotificationsubmit()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$this->form_validation->set_rules('pointerstartdate','pointerstartdate','trim|');
+		$this->form_validation->set_rules('pointerenddate','pointerenddate','trim|');
+		$this->form_validation->set_rules('pointer','pointer','trim|');
+		if($this->form_validation->run() == FALSE)	
+		{
+			$data['alerterror'] = validation_errors();
+			$data[ 'status' ] =$this->category_model->getstatusdropdown();
+			$data['category']=$this->category_model->getcategorydropdown();
+            $data['listing']=$this->listing_model->getlistingdropdown();
+            $data['typeofimage']=$this->category_model->gettypeofimagedropdown();
+			$data['before']=$this->category_model->beforeeditcategory($this->input->post('id'));
+			$data['page']='editcategory';
+			$data['title']='Edit category';
+			$this->load->view('template',$data);
+		}
+		else
+		{
+			$id=$this->input->post('id');
+			
+			$pointerstartdate=$this->input->post('pointerstartdate');
+			$pointerenddate=$this->input->post('pointerenddate');
+			$pointer=$this->input->post('pointer');
+			
+            
+			if($this->listing_model->editlistingnotification($id,$pointerstartdate,$pointerenddate,$pointer)==0)
+			$data['alerterror']="Listing Notification Dates Editing was unsuccesful";
+			else
+			$data['alertsuccess']="Listing Notification Dates edited Successfully.";
+			$data['redirect']="site/viewlistingnotification";
+			$this->load->view("redirect",$data);
+		}
+	}
+    
+     
+	function viewexpiredlistingnotification()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['table']=$this->listing_model->getexpiredlistingnotification();
+		$data['page']='viewexpiredlistingnotification';
+		$data['title']='View Expired Listing Notifications';
+		$this->load->view('template',$data);
+	}
+     
+	function viewupcomminglistingnotification()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['table']=$this->listing_model->getupcomminglistingnotification();
+		$data['page']='viewupcomminglistingnotification';
+		$data['title']='View UpComming Listing Notifications';
+		$this->load->view('template',$data);
+	}
+    
+    
+	function printpaymentreceipt()
+	{
+		$access = array("1");
+		$this->checkaccess($access);
+		$data['table']=$this->billing_model->viewbillingforreceipt($this->input->get('id'));
+		$data['page']='receipt';
+		$this->load->view('receipt',$data);
 	}
 }
 ?>

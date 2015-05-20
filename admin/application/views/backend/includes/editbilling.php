@@ -49,6 +49,19 @@
 					?>
 				  </div>
 				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Start Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="startdate" name="startdate" class="form-control" value="<?php echo set_value('startdate',$before->startdate); ?>">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">End Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="enddate" name="enddate" class="form-control" value="<?php echo set_value('enddate',$before->enddate); ?>">
+					</div>
+				</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">credits</label>
 				  <div class="col-sm-4">

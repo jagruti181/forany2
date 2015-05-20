@@ -7,7 +7,7 @@
         if($userid==1 && $accesslevel==1)
         {
         ?>
-		<a class="btn btn-danger"  href="<?php echo site_url('site/tejasdelete'); ?>"><i class="icon-upload" onclick="return confirm('Are you sure you want to delete?')"></i>DELETE ALL LISTING</a> &nbsp; 
+		<a class="btn btn-danger"  href="<?php echo site_url('site/tejasdelete'); ?>" onclick="return confirm('Are you sure you want to delete?')"><i class="icon-upload"></i>DELETE ALL LISTING</a> &nbsp; 
 		<?php
         }
         ?>

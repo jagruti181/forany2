@@ -16,7 +16,7 @@
 				<tr>
 					<!--<th>Id</th>-->
 <!--					<th>Listing</th>-->
-					<th>Type Of Enquiry</th>
+<!--					<th>Type Of Enquiry</th>-->
 					<th>Listing</th>
 					<th>Category</th>
 					<th>Comment</th>
@@ -29,10 +29,10 @@
 					<tr>
 						<!--<td><?php echo $row->id;?></td>-->
 <!--						<td><?php echo $row->listing;?></td>-->
-						<td><?php echo $row->typeofenquiry;?></td>
+<!--						<td><?php echo $row->typeofenquiry;?></td>-->
 						<td><?php echo $row->listingname;?></td>
 						<td><?php echo $row->categoryname;?></td>
-						<td><?php echo $row->comment;?></td>
+						<td><p style="width: 400px;white-space: pre-wrap;word-wrap: break-word;"><?php echo $row->comment;?></p></td>
 						<td><?php echo $row->timestamp;?></td>
 						
 						<td>

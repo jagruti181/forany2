@@ -4,7 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class Billing_model extends CI_Model
 {
 	
-	public function create($listing,$user,$paymenttype,$amount,$period,$credits,$payedto)
+	public function create($listing,$user,$paymenttype,$amount,$period,$credits,$payedto,$startdate,$enddate)
 	{
 		$data  = array(
 			'listing' => $listing,
@@ -13,6 +13,8 @@ class Billing_model extends CI_Model
 			'amount' => $amount,
             'period'=>$period,
             'credits'=>$credits,
+            'startdate'=>$startdate,
+            'enddate'=>$enddate,
             'timestamp'=>NULL,
             'payedto'=>$payedto
 		);
@@ -25,7 +27,7 @@ class Billing_model extends CI_Model
 			return  1;
 	}
     
-	public function edit($id,$listing,$user,$paymenttype,$amount,$period,$credits,$payedto)
+	public function edit($id,$listing,$user,$paymenttype,$amount,$period,$credits,$payedto,$startdate,$enddate)
 	{
 		$data  = array(
 			'listing' => $listing,
@@ -34,6 +36,8 @@ class Billing_model extends CI_Model
 			'amount' => $amount,
             'period'=>$period,
             'credits'=>$credits,
+            'startdate'=>$startdate,
+            'enddate'=>$enddate,
             'timestamp'=>NULL,
             'payedto'=>$payedto
 		);
@@ -51,6 +55,21 @@ INNER JOIN `listing` ON `listing`.`id` = `billing`.`listing`
 INNER JOIN `paymenttype` ON `paymenttype`.`id` = `billing`.`paymenttype`  ";
 	   
 		$query=$this->db->query($query)->result();
+		return $query;
+	}
+    
+	function viewbillingforreceipt()
+	{
+        $id=$this->input->get('id');
+		$query="SELECT `billing`.`id`, `billing`.`listing`, `billing`.`user`, `billing`.`timestamp`, `billing`.`paymenttype`, `billing`.`amount`, `billing`.`period`, `billing`.`credits`, `billing`.`payedto`,`billing`.`startdate`,`billing`.`enddate`, `billing`.`deletestatus` ,`tab1`.`firstname` AS `firstname`,`tab1`.`lastname` AS `lastname`,`tab2`.`firstname` AS `payedtofirstname`,`tab2`.`lastname` AS `payedtolastname`,`listing`.`name`  AS `listingname`,`paymenttype`.`name` AS `paymenttypename`
+FROM `billing` 
+LEFT OUTER JOIN `user` as `tab1` ON `tab1`.`id` = `billing`.`user`
+LEFT OUTER JOIN `user` as `tab2` ON `tab2`.`id` = `billing`.`payedto`
+LEFT OUTER JOIN `listing` ON `listing`.`id` = `billing`.`listing`
+LEFT OUTER JOIN `paymenttype` ON `paymenttype`.`id` = `billing`.`paymenttype` 
+WHERE `billing`.`id`='$id'";
+	   
+		$query=$this->db->query($query)->row();
 		return $query;
 	}
     

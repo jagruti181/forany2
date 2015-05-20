@@ -807,7 +807,7 @@ phonecatControllers.controller('detail',
 
             if (check == '') {
                 console.log($scope.allvalidation);
-                RestService.enquiryuser(enquiry.name, $scope.detail.listing.listingid, enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
+                RestService.enquiryuser(enquiry.name,enquiry.email, enquiry.phone, enquiry.comment).success(enquirysuccess);
             } else {
                 toaster.pop('error', "Enquiry", "Enter Proper " + check, 5000);
             }

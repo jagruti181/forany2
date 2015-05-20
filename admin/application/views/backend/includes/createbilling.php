@@ -47,7 +47,7 @@
 				  </div>
 				</div>
 				
-				<div class=" form-group">
+				<div class=" form-group" style="display:none;">
 				  <label class="col-sm-2 control-label">Period</label>
 				  <div class="col-sm-4">
 					<?php
@@ -55,6 +55,18 @@
 						echo form_dropdown('period',$period,set_value('period'),'class="chzn-select form-control" 	data-placeholder="Choose a Accesslevel..."');
 					?>
 				  </div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Start Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="startdate" name="startdate" class="form-control" value="<?php echo set_value('startdate'); ?>">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">End Date</label>
+					<div class="col-sm-4">
+					  <input type="date" id="enddate" name="enddate" class="form-control" value="<?php echo set_value('enddate'); ?>">
+					</div>
 				</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">credits</label>

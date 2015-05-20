@@ -178,11 +178,12 @@ HAVING `enddateofbanner`=`fivedaysbefore`")->result();
 		
 		return 1;
 	}
-	public function editnotification( $id,$banner,$startdateofbanner,$enddateofbanner)
+	public function editnotification( $id,$banner,$startdateofbanner,$enddateofbanner,$listing)
 	{
 		$data = array(
 			'banner' => $banner,
 			'startdateofbanner' => $startdateofbanner,
+			'listing' => $listing,
 			'enddateofbanner' => $enddateofbanner
 		
 		);

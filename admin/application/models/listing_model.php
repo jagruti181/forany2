@@ -4,7 +4,7 @@ if ( !defined( 'BASEPATH' ) )
 class Listing_model extends CI_Model
 {
 	
-	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)
+	public function create($name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status,$pointerstartdate,$pointerenddate)
 	{
 		$data  = array(
 			'name' => $name,
@@ -34,6 +34,8 @@ class Listing_model extends CI_Model
             'area' => $area,
             'mobile' => $mobile,
             'status' => $status,
+            'pointerstartdate' => $pointerstartdate,
+            'pointerenddate' => $pointerenddate,
             'logo' => $logo
 		);
 		$query=$this->db->insert( 'listing', $data );
@@ -188,7 +190,7 @@ class Listing_model extends CI_Model
 		return $query;
 	}
 	
-	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status)
+	public function edit($id,$name,$user,$lat,$long,$address,$city,$pincode,$state,$country,$description,$contact,$email,$website,$facebookuserid,$googleplus,$twitter,$yearofestablishment,$timeofoperation_start,$timeofoperation_end,$type,$credits,$isverified,$video,$logo,$category,$modeofpayment,$daysofoperation,$pointer,$area,$mobile,$status,$pointerstartdate,$pointerenddate)
 	{
 		$data  = array(
 			'name' => $name,
@@ -218,6 +220,8 @@ class Listing_model extends CI_Model
             'area' => $area,
             'mobile' => $mobile,
             'status' => $status,
+            'pointerstartdate' => $pointerstartdate,
+            'pointerenddate' => $pointerenddate,
             'logo' => $logo
 		);
 		
@@ -429,7 +433,7 @@ class Listing_model extends CI_Model
 FROM `listingcategory`
 LEFT OUTER JOIN `listing` ON `listing`.`id`=`listingcategory`.`listing`
 LEFT OUTER JOIN `category` ON `listingcategory`.`category`=`category`.`id`
-WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1 AND `listing`.`status`=1")->result();
+WHERE `listingcategory`.`category`='$id' AND `listing`.`deletestatus`=1 AND `listing`.`status`=1 ORDER BY `listing`.`pointer`")->result();
         
 		foreach($query as $p_row)
 		{
@@ -567,14 +571,23 @@ WHERE `listingcategory`.`category`='$id' ";
             {
                 $cityid=$cityquery->id;
             }
-            
-            
+            $area=$row['area'];
+            $areaquery=$this->db->query("SELECT * FROM `location` WHERE `city`='$cityid' AND `name` LIKE '$area'")->row();
+            if(empty($areaquery))
+            {
+                $this->db->query("INSERT INTO `location`(`name`,`city`) VALUES ('$area','$cityid')");
+                $areaid=$this->db->insert_id();
+            }
+            else
+            {
+                $areaid=$areaquery->id;
+            }
             $data  = array(
                 'name' => $row['name'],
                 'user' => 1,
                 'address' => $address,
                 'city' => $cityid,
-                'area' => $row['address3'],
+                'area' => $areaid,
                 'pincode' => $row['pincode'],
 //                'state' => 'Maharashtra',
 //                'country' => 'India',
@@ -591,6 +604,8 @@ WHERE `listingcategory`.`category`='$id' ";
                 'timeofoperation_end' => $row['timeofoperation_end'],
                 'video' => $row['video'],
                 'area' => $row['area'],
+                'status' => 1,
+                'pointer' => 1000,
                 'contactno' => $contact
             );
 
@@ -601,9 +616,6 @@ WHERE `listingcategory`.`category`='$id' ";
                $this->listing_model->createcategorybylisting($value,$listingid);
             }
         }
-		if(!$query)
-			return  0;
-		else
 			return  1;
 	}
     
@@ -661,5 +673,48 @@ WHERE `listingcategory`.`category`='$id' ";
         
 	}
     
+    
+        function getmonthbeforelistingnotifications()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `pointerstartdate`, `pointerenddate`, `pointer` ,NOW() AS `today`,DATE(NOW()+INTERVAL 30 DAY) AS `monthbefore`
+FROM `listing` 
+HAVING `pointerenddate`=`monthbefore`")->result();
+		return $query;
+        }
+    
+        function getfivedaysbeforelistingnotifications()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `pointerstartdate`, `pointerenddate`, `pointer` ,NOW() AS `today`,DATE(NOW()+INTERVAL 5 DAY) AS `fivedaysbefore`
+FROM `listing` 
+HAVING `pointerenddate`=`fivedaysbefore`")->result();
+		return $query;
+        }
+        
+	public function editlistingnotification($id,$pointerstartdate,$pointerenddate,$pointer)
+	{
+		$data = array(
+			'pointerstartdate' => $pointerstartdate,
+			'pointerenddate' => $pointerenddate,
+			'pointer' => $pointer
+		
+		);
+		$this->db->where( 'id', $id );
+		$query=$this->db->update( 'listing', $data );
+		
+		return 1;
+	}
+    
+        function getexpiredlistingnotification()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `pointerstartdate`, `pointerenddate`, `pointer`,NOW() AS `today` FROM `listing` HAVING `pointerenddate`<`today`  ORDER BY `pointerenddate`")->result();
+		return $query;
+        }
+        function getupcomminglistingnotification()
+        { 
+        	$query=$this->db->query("SELECT `id`, `name`, `pointerstartdate`, `pointerenddate`, `pointer` ,NOW() AS `today`
+FROM `listing` 
+HAVING `pointerenddate`>`today` ORDER BY `id` DESC")->result();
+		return $query;
+        }
 }
 ?>

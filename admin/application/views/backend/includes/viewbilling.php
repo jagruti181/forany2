@@ -23,6 +23,7 @@
                         <th data-field="amount">Amount</th>
                         <th data-field="period">Period</th>
                         <th data-field="credits">Credits</th>
+                        <th data-field="Receipt">Receipt</th>
                         <th data-field="action"> Actions </th>
                     </tr>
                 </thead>
@@ -39,7 +40,8 @@
                 {
                     resultrow.address="";
                 }
-                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.listingname + "</td><td>" + resultrow.firstname + "</td><td>" + resultrow.paymenttype + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.period + "</td><td>" + resultrow.credits + "</td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editbilling?id=');?>"+resultrow.id +"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deletebilling?id='); ?>"+resultrow.id +"'><i class='icon-trash '></i></a></td><tr>";
+                var buttonused="<a href='<?php echo site_url('site/printstudentpaymentreceipt?studentpaymentid='); ?>' target='_blank'>View</a>";
+                return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.listingname + "</td><td>" + resultrow.firstname + "</td><td>" + resultrow.paymenttype + "</td><td>" + resultrow.amount + "</td><td>" + resultrow.period + "</td><td>" + resultrow.credits + "</td><td><a class='btn btn-primary btn-m' target='_blank' href='<?php echo site_url('site/printpaymentreceipt?id=');?>"+resultrow.id +" '>View</a></td><td><a class='btn btn-primary btn-xs' href='<?php echo site_url('site/editbilling?id=');?>"+resultrow.id +"'><i class='icon-pencil'></i></a><a class='btn btn-danger btn-xs' href='<?php echo site_url('site/deletebilling?id='); ?>"+resultrow.id +"'><i class='icon-trash '></i></a></td><tr>";
             }
             generatejquery('<?php echo $base_url;?>');
         </script>

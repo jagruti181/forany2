@@ -95,6 +95,15 @@
 				</div>
 
                 
+					<div class=" form-group">
+					  <label class="col-sm-2 control-label">Listing</label>
+					  <div class="col-sm-4">
+						<?php
+							
+							echo form_dropdown('listing',$listing,set_value('listing',$before->listing),'id="select2" class="chzn-select form-control" 	data-placeholder="Choose Listing..."');
+						?>
+					  </div>
+					</div>
 				<div class=" form-group">
 				  <label class="col-sm-2 control-label" for="normal-field">Banner Start Date</label>
 				  <div class="col-sm-4">
