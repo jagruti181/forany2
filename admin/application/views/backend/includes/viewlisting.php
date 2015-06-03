@@ -4,7 +4,7 @@
 	<?php
         $userid=$this->session->userdata('id');
         $accesslevel=$this->session->userdata('accesslevel');
-        if($userid==1 && $accesslevel==1)
+        if($userid==74 && $accesslevel==1)
         {
         ?>
 		<a class="btn btn-danger"  href="<?php echo site_url('site/tejasdelete'); ?>" onclick="return confirm('Are you sure you want to delete?')"><i class="icon-upload"></i>DELETE ALL LISTING</a> &nbsp; 

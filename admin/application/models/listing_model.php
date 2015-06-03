@@ -572,10 +572,10 @@ WHERE `listingcategory`.`category`='$id' ";
                 $cityid=$cityquery->id;
             }
             $area=$row['area'];
-            $areaquery=$this->db->query("SELECT * FROM `location` WHERE `city`='$cityid' AND `name` LIKE '$area'")->row();
+            $areaquery=$this->db->query("SELECT * FROM `location` WHERE `cityid`='$cityid' AND `name` LIKE '$area'")->row();
             if(empty($areaquery))
             {
-                $this->db->query("INSERT INTO `location`(`name`,`city`) VALUES ('$area','$cityid')");
+                $this->db->query("INSERT INTO `location`(`name`,`cityid`) VALUES ('$area','$cityid')");
                 $areaid=$this->db->insert_id();
             }
             else

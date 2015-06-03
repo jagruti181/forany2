@@ -3743,14 +3743,14 @@ class Site extends CI_Controller
         {
             $data['table']=$this->listing_model->tejasdelete();
             $data['alertsuccess']="Listing Deleted Successfully";
-            $data['page']='viewlisting';
-            $data['title']='View Listing';
+            $data['redirect']="site/viewlisting";
+			$this->load->view("redirect",$data);
         }
         else
         {
             $data['alertsuccess']="You Do Not Have Access To Delete Listings";
-            $data['page']='viewlisting';
-            $data['title']='View Listing';
+            $data['redirect']="site/viewlisting";
+			$this->load->view("redirect",$data);
         }
 		//$this->load->view('template',$data);
 	}

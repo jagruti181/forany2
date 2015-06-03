@@ -382,7 +382,7 @@ HAVING `enddateofbanner`=`fivedaysbefore`")->result();
         }
         else
         {
-            $area=" AND `location`.`id`= '$area' ";
+            $areawhere=" AND `location`.`id`= '$area' ";
         }
 		$query=$this->db->query("SELECT `listingcategory`.`listing`, `listingcategory`.`category`,`listing`.`name`,`listing`.`id` AS `listingid`,ROUND(( 3959 * acos( cos( radians($lat) ) * cos( radians(`listing`. `lat` ) ) 
    * cos( radians(`listing`.`long`) - radians($long)) + sin(radians($lat)) 
